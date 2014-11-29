@@ -9,6 +9,13 @@
             "email": "pendalf@mail.ru"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
+    "require": {
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-imagine": "*",
+        "kartik-v/yii2-widgets": "*"
+    },
     "autoload": {
         "psr-4": {
             "pendalf89\\filemanager\\": ""
