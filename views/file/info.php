@@ -13,6 +13,7 @@ $bundle = FilemanagerAsset::register($this);
 <ul class="detail">
     <li><?= $model->type ?></li>
     <li><?= Yii::$app->formatter->asDatetime($model->getLastChanges()) ?></li>
+    <?php Yii::$app->formatter->sizeFormatBase = 1000; ?>
     <li><?= Yii::$app->formatter->asShortSize($model->size, 0) ?></li>
     <li><?= Html::a(Module::t('main', 'Delete'), ['/filemanager/file/delete/', 'id' => $model->id],
             [
