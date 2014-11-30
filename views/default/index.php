@@ -2,14 +2,14 @@
 
 use yii\helpers\Html;
 use pendalf89\filemanager\Module;
-use pendalf89\filemanager\assets\ModuleAsset;
+use pendalf89\filemanager\assets\FilemanagerAsset;
 
 /* @var $this yii\web\View */
 
 $this->title = Module::t('main', 'File manager');
 $this->params['breadcrumbs'][] = $this->title;
 
-$assetPath = ModuleAsset::register($this)->baseUrl;
+$assetPath = FilemanagerAsset::register($this)->baseUrl;
 ?>
 
 <div class="filemanager-default-index">

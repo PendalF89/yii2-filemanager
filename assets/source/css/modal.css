@@ -1,0 +1,20 @@
+/*------------------------------------*\
+    #MODAL
+\*------------------------------------*/
+#filemanager-modal .modal-title {
+  font-size: 1.2em;
+}
+#filemanager-modal .modal-dialog {
+  width: 1000px;
+}
+#filemanager-modal .modal-body {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+/*------------------------------------*\
+    #IFRAME
+\*------------------------------------*/
+#filemanager-frame {
+  width: 100%;
+  height: 484px;
+}

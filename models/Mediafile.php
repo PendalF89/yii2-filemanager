@@ -7,6 +7,7 @@ use yii\web\UploadedFile;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\imagine\Image;
+use yii\data\ActiveDataProvider;
 use pendalf89\filemanager\Module;
 
 /**
@@ -17,6 +18,7 @@ use pendalf89\filemanager\Module;
  * @property string $type
  * @property string $url
  * @property string $alt
+ * @property integer $size
  * @property string $description
  * @property string $thumbs
  * @property integer $created_at
@@ -42,9 +44,9 @@ class Mediafile extends ActiveRecord
     public function rules()
     {
         return [
-            [['filename', 'type', 'url'], 'required'],
+            [['filename', 'type', 'url', 'size'], 'required'],
             [['url', 'alt', 'description', 'thumbs'], 'string'],
-            [['created_at', 'updated_at'], 'integer'],
+            [['created_at', 'updated_at', 'size'], 'integer'],
             [['filename', 'type'], 'string', 'max' => 255],
             [['file'], 'file']
         ];
@@ -61,6 +63,7 @@ class Mediafile extends ActiveRecord
             'type' => Module::t('main', 'Type'),
             'url' => Module::t('main', 'Url'),
             'alt' => Module::t('main', 'Alt attribute'),
+            'size' => Module::t('main', 'Size'),
             'description' => Module::t('main', 'Description'),
             'thumbs' => Module::t('main', 'Thumbnails'),
             'created_at' => Module::t('main', 'Created'),
@@ -116,6 +119,7 @@ class Mediafile extends ActiveRecord
         $this->file->saveAs("$absolutePath/$filename");
         $this->filename = $filename;
         $this->type = $this->file->type;
+        $this->size = $this->file->size;
         $this->url = $url;
 
         return $this->save();
@@ -190,27 +194,23 @@ class Mediafile extends ActiveRecord
     }
 
     /**
+     * @param $baseUrl
      * @return string default thumbnail for image
      */
-    public function getDefaultThumbUrl()
+    public function getDefaultThumbUrl($baseUrl = '')
     {
-        $size = Module::getDefaultThumbSize();
-        $originalFile = pathinfo($this->url);
-        $dirname = $originalFile['dirname'];
-        $filename = $originalFile['filename'];
-        $extension = $originalFile['extension'];
-        $width = $size[0];
-        $height = $size[1];
+        if ($this->isImage()) {
+            $size = Module::getDefaultThumbSize();
+            $originalFile = pathinfo($this->url);
+            $dirname = $originalFile['dirname'];
+            $filename = $originalFile['filename'];
+            $extension = $originalFile['extension'];
+            $width = $size[0];
+            $height = $size[1];
 
-        return "$dirname/$filename-{$width}x{$height}.$extension";
-    }
+            return "$dirname/$filename-{$width}x{$height}.$extension";
+        }
 
-    /**
-     * @param $baseUrl
-     * @return string default thumbnail for current media type
-     */
-    public function getFileThumbUrl($baseUrl)
-    {
         return "$baseUrl/images/file.png";
     }
 
@@ -246,6 +246,21 @@ class Mediafile extends ActiveRecord
     {
         $basePath = Yii::getAlias($routes['basePath']);
         return unlink("$basePath/{$this->url}");
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     * @return ActiveDataProvider
+     */
+    public function search()
+    {
+        $query = self::find()->orderBy('created_at DESC');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $dataProvider;
     }
 
     /**

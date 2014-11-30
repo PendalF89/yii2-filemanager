@@ -1,41 +1,19 @@
 <?php
 
-use dosamigos\fileupload\FileUploadUI;
-use pendalf89\filemanager\assets\ModuleAsset;
+use yii\widgets\ActiveForm;
+use pendalf89\blog\models\Post;
+use pendalf89\filemanager\widgets\FileInput;
 
-$bundle = ModuleAsset::register($this);
+/* @var $this yii\web\View */
+/* @var $form yii\widgets\ActiveForm */
 ?>
-<div class="container-fluid">
-    <?= FileUploadUI::widget([
-        'model' => $model,
-        'attribute' => 'file',
-        'url' => ['upload'],
-        'gallery' => false,
-    ]) ?>
-</div>
+<?php $model = new Post();?>
+<?php $model = Post::findOne(1);?>
 
+<?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'original_thumbnail')->widget(FileInput::className(), [
+        'options' => ['class' => 'form-control'],
+    ]); ?>
 
-<?php
-
-
-//echo \yii\helpers\Html::img($bundle->baseUrl . '/images/file.png');
-//$model = \pendalf89\filemanager\models\Mediafile::findOne(22);
-//$model->deleteThumbs($this->context->module->routes);
-
-$models = \pendalf89\filemanager\models\Mediafile::findByTypes(\pendalf89\filemanager\models\Mediafile::$imageFileTypes);
-
-foreach ($models as $model) {
-
-    echo '<ul>';
-
-    //$defaultImg = \yii\helpers\Html::img($model->getDefaultThumbUrl());
-    //echo "<li>По-умолчанию: <br>$defaultImg</li>";
-    echo $model->filename;
-    foreach ($model->getThumbs() as $alias => $thumb) {
-        $img = \yii\helpers\Html::img($thumb);
-        echo "<li>$alias<br>$img</li>";
-    }
-
-    echo '</ul>';
-}
+<?php ActiveForm::end(); ?>

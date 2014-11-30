@@ -13,6 +13,7 @@ class m141129_130551_create_filemanager_mediafile_table extends Migration
             'type' => Schema::TYPE_STRING . ' NOT NULL',
             'url' => Schema::TYPE_TEXT . ' NOT NULL',
             'alt' => Schema::TYPE_TEXT,
+            'size' => Schema::TYPE_STRING . ' NOT NULL',
             'description' => Schema::TYPE_TEXT,
             'thumbs' => Schema::TYPE_TEXT,
             'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
