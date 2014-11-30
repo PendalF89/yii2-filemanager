@@ -13,24 +13,26 @@ $this->params['moduleBundle'] = FilemanagerAsset::register($this);
 
 <header id="header"><span class="glyphicon glyphicon-picture"></span> <?= Module::t('main', 'File manager') ?></header>
 
-<?= ListView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => '<div class="items">{items}</div>{pager}',
-    'itemOptions' => ['class' => 'item'],
-    'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(
-                Html::img($model->getDefaultThumbUrl($this->params['moduleBundle']->baseUrl))
-                . '<span class="checked glyphicon glyphicon-check"></span>',
-                '#mediafile',
-                ['data-key' => $key]
-            );
-        },
-]) ?>
+<div id="filemanager" data-url-info="<?= Yii::$app->urlManager->createUrl(['/filemanager/file/info']) ?>">
+    <?= ListView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => '<div class="items">{items}</div>{pager}',
+        'itemOptions' => ['class' => 'item'],
+        'itemView' => function ($model, $key, $index, $widget) {
+                return Html::a(
+                    Html::img($model->getDefaultThumbUrl($this->params['moduleBundle']->baseUrl))
+                    . '<span class="checked glyphicon glyphicon-check"></span>',
+                    '#mediafile',
+                    ['data-key' => $key]
+                );
+            },
+    ]) ?>
 
-<div class="dashboard">
-    <p><?= Html::a('<span class="glyphicon glyphicon-upload"></span> ' . Module::t('main', 'Upload manager'),
-            ['/filemanager/file/uploadmanager'], ['class' => 'btn btn-default']) ?></p>
-    <div id="fileinfo">
+    <div class="dashboard">
+        <p><?= Html::a('<span class="glyphicon glyphicon-upload"></span> ' . Module::t('main', 'Upload manager'),
+                ['/filemanager/file/uploadmanager'], ['class' => 'btn btn-default']) ?></p>
+        <div id="fileinfo">
 
+        </div>
     </div>
 </div>

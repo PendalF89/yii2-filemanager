@@ -42,16 +42,10 @@ class FileInput extends InputWidget
 
         FileInputAsset::register($this->getView());
 
-        $this->getView()->registerJs(
-            '$("#' . $this->buttonOptions['id'] . '").on("click", function(e) {
-                e.preventDefault();
-                var iframe = \'<iframe src="' . Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']) . '" id="filemanager-frame" frameborder="0"></iframe>\';
-                $("#filemanager-modal .modal-body").html(iframe);
-                $("#filemanager-modal").modal("show");
-            });'
-        );
-
-        $modal = $this->renderFile('@vendor/pendalf89/yii2-filemanager/views/file/modal.php');
+        $modal = $this->renderFile('@vendor/pendalf89/yii2-filemanager/views/file/modal.php', [
+            'btnId' => $this->buttonOptions['id'],
+            'frameSrc' => Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']),
+        ]);
 
         return strtr($this->template, $replace) . $modal;
     }

@@ -9,8 +9,20 @@ use yii\helpers\Html;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $bundle = FilemanagerAsset::register($this);
 ?>
-
-<?= Html::img($model->getDefaultThumbUrl($bundle)) ?>
+<?= Html::img($model->getDefaultThumbUrl($bundle->baseUrl)) ?>
 <ul class="detail">
-    <li><?= $model->filename ?></li>
+    <li><?= $model->type ?></li>
+    <li><?= Yii::$app->formatter->asDatetime($model->getLastChanges()) ?></li>
+    <li><?= Yii::$app->formatter->asShortSize($model->size, 0) ?></li>
+    <li><?= Html::a(Module::t('main', 'Delete'), ['/filemanager/file/delete/', 'id' => $model->id],
+            [
+                'class' => 'text-danger',
+                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                'data-id' => $model->id,
+                'role' => 'delete',
+            ]
+        ) ?></li>
 </ul>
+<div class="filename">
+    <?= $model->filename ?>
+</div>

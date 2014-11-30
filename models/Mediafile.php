@@ -264,6 +264,14 @@ class Mediafile extends ActiveRecord
     }
 
     /**
+     * @return int last changes timestamp
+     */
+    public function getLastChanges()
+    {
+        return !empty($this->updated_at) ? $this->updated_at : $this->created_at;
+    }
+
+    /**
      * Find model by url
      *
      * @param $url

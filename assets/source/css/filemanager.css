@@ -64,6 +64,7 @@
     #DASHBOARD
 \*------------------------------------*/
 .dashboard {
+  width: 298px;
   float: left;
   padding-left: 10px;
 }
@@ -95,6 +96,9 @@
   padding: 0;
   list-style: none;
   font-size: .85em;
+}
+#fileinfo .filename {
+  clear: both;
 }
 /*------------------------------------*\
     #SPIN ICONS
