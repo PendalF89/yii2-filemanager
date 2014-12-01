@@ -272,6 +272,38 @@ class Mediafile extends ActiveRecord
     }
 
     /**
+     * This method wrap getimagesize() function
+     * @param array $routes see routes in module config
+     * @param string $delimiter delimiter between width and height
+     * @return string image size like '1366x768'
+     */
+    public function getImageSize(array $routes, $delimiter = ' × ')
+    {
+        $imageSizes = $this->getImageSizes($routes);
+        return "$imageSizes[0]$delimiter$imageSizes[1]";
+    }
+
+    /**
+     * This method wrap getimagesize() function
+     * @param array $routes see routes in module config
+     * @return array
+     */
+    public function getImageSizes(array $routes)
+    {
+        $basePath = Yii::getAlias($routes['basePath']);
+        return getimagesize("$basePath/{$this->url}");
+    }
+
+    /**
+     * @return string file size
+     */
+    public function getFileSize()
+    {
+        Yii::$app->formatter->sizeFormatBase = 1000;
+        return Yii::$app->formatter->asShortSize($this->size, 0);
+    }
+
+    /**
      * Find model by url
      *
      * @param $url

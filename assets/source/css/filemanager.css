@@ -89,6 +89,7 @@
 \*------------------------------------*/
 #fileinfo img {
   float: left;
+  max-width: 82px;
 }
 #fileinfo .detail {
   float: left;
