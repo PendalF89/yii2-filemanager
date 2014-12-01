@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use pendalf89\filemanager\Module;
 use pendalf89\filemanager\models\Mediafile;
 use pendalf89\filemanager\assets\FilemanagerAsset;
 
@@ -20,6 +21,7 @@ class FileController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'update' => ['post'],
                 ],
             ],
         ];
@@ -86,6 +88,25 @@ class FileController extends Controller
         ];
 
         return $response;
+    }
+
+    /**
+     * Updated mediafile by id
+     * @param $id
+     * @return array
+     */
+    public function actionUpdate($id)
+    {
+        $model = Mediafile::findOne($id);
+        $message = Module::t('main', 'Changes not saved.');
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $message = Module::t('main', 'Changes saved!');
+        }
+
+        Yii::$app->session->setFlash('mediafileUpdateResult', $message);
+
+        return $this->renderPartial('info', ['model' => $model]);
     }
 
     /**

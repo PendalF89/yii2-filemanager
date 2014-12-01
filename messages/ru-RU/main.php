@@ -23,4 +23,7 @@ return [
     'Do not forget every time you change thumbnails presets to make them resize.' => 'Не забывайте при каждом изменении предустановок миниатюр делать их ресайз.',
     'Upload manager' => 'Менеджер загрузок',
     'Back to file manager' => 'Назад, к файловому менеджеру',
+    'Alt attribute' => 'Атрибут alt',
+    'Changes not saved.' => 'Изменения не сохранены.',
+    'Changes saved!' => 'Изменения сохранены!',
 ];

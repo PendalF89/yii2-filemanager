@@ -1,14 +1,17 @@
 <?php
 
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use pendalf89\filemanager\assets\FilemanagerAsset;
 use pendalf89\filemanager\Module;
-use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model pendalf89\filemanager\models\Mediafile */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $form yii\widgets\ActiveForm */
+
 $bundle = FilemanagerAsset::register($this);
 ?>
+
 <?= Html::img($model->getDefaultThumbUrl($bundle->baseUrl)) ?>
 <ul class="detail">
     <li><?= $model->type ?></li>
@@ -26,6 +29,23 @@ $bundle = FilemanagerAsset::register($this);
             ]
         ) ?></li>
 </ul>
-<div class="filename">
-    <?= $model->filename ?>
-</div>
+
+<div class="filename"><?= $model->filename ?></div>
+
+<?php $form = ActiveForm::begin([
+    'action' => ['/filemanager/file/update', 'id' => $model->id],
+    'options' => ['class' => 'form-update'],
+]); ?>
+    <?php if ($model->isImage()) : ?>
+        <?= $form->field($model, 'alt')->textInput(['class' => 'form-control input-sm']); ?>
+    <?php endif; ?>
+
+    <?= $form->field($model, 'description')->textarea(['class' => 'form-control input-sm']); ?>
+
+    <?= Html::submitButton(Module::t('main', 'Save'), ['class' => 'btn btn-success btn-sm']) ?>
+
+    <?php if ($message = Yii::$app->session->getFlash('mediafileUpdateResult')) : ?>
+        <span class="text-success"><?= $message ?></span>
+    <?php endif; ?>
+
+<?php ActiveForm::end(); ?>

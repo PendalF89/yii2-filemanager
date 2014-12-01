@@ -100,6 +100,14 @@
 }
 #fileinfo .filename {
   clear: both;
+  margin-bottom: 5px;
+}
+#fileinfo .form-update .control-label {
+  font-size: .9em;
+  margin-bottom: 0;
+}
+#fileinfo .form-update .form-group {
+  margin-bottom: 0;
 }
 /*------------------------------------*\
     #SPIN ICONS

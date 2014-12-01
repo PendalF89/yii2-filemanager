@@ -1,6 +1,10 @@
 $(document).ready(function() {
     var ajaxRequest = null;
 
+    function setAjaxLoader() {
+        $("#fileinfo").html('<div class="loading"><span class="glyphicon glyphicon-refresh spin"></span></div>');
+    }
+
     $('[href="#mediafile"]').on("click", function(e) {
         e.preventDefault();
 
@@ -19,7 +23,7 @@ $(document).ready(function() {
             url: url,
             data: "id=" + id,
             beforeSend: function() {
-                $("#fileinfo").html('<div class="loading"><span class="glyphicon glyphicon-refresh spin"></span></div>');
+                setAjaxLoader();
             },
             success: function(html) {
                 $("#fileinfo").html(html);
@@ -27,14 +31,14 @@ $(document).ready(function() {
         });
     });
 
-    $('#fileinfo').on("click", '[role="delete"]', function(e) {
+    $("#fileinfo").on("click", '[role="delete"]', function(e) {
         e.preventDefault();
 
         var url = $(this).attr("href"),
             id = $(this).attr("data-id"),
             confirmMessage = $(this).attr("data-confirm");
 
-        ajaxRequest = $.ajax({
+        $.ajax({
             type: "POST",
             url: url,
             data: "id=" + id,
@@ -49,6 +53,25 @@ $(document).ready(function() {
                     $("#fileinfo").html('');
                     $('[data-key="' + id + '"]').fadeOut();
                 }
+            }
+        });
+    });
+
+    $("#fileinfo").on("submit", ".form-update", function(e) {
+        e.preventDefault();
+
+        var url = $(this).attr("action"),
+            data = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            beforeSend: function() {
+                setAjaxLoader();
+            },
+            success: function(html) {
+                $("#fileinfo").html(html);
             }
         });
     });
