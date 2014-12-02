@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var ajaxRequest = null,
         fileInfoContainer = $("#fileinfo"),
-        strictThumb = $(window.parent.document.getElementById("filemanager-modal")).attr("data-thumb");
+        strictThumb = $(window.frameElement).parents('[role="filemanager-modal"]').attr("data-thumb");
 
     function setAjaxLoader() {
         $("#fileinfo").html('<div class="loading"><span class="glyphicon glyphicon-refresh spin"></span></div>');

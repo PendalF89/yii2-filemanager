@@ -47,11 +47,13 @@ $bundle = FilemanagerAsset::register($this);
         <div class="form-group<?= $strictThumb ? ' hidden' : '' ?>">
             <?= Html::label(Module::t('main', 'Select image size'), 'image', ['class' => 'control-label']) ?>
 
-            <?= Html::dropDownList('image', $model->getThumbByAlias($strictThumb), $model->getImagesList($this->context->module), [
+            <?= Html::dropDownList('url', $model->getThumbByAlias($strictThumb), $model->getImagesList($this->context->module), [
                 'class' => 'form-control input-sm'
             ]) ?>
             <div class="help-block"></div>
         </div>
+    <?php else : ?>
+        <?= Html::hiddenInput('url', $model->url) ?>
     <?php endif; ?>
 
     <?= Html::button(Module::t('main', 'Insert'), ['id' => 'insert-btn', 'class' => 'btn btn-primary btn-sm']) ?>

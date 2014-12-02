@@ -106,7 +106,10 @@ class FileController extends Controller
 
         Yii::$app->session->setFlash('mediafileUpdateResult', $message);
 
-        return $this->renderPartial('info', ['model' => $model]);
+        return $this->renderPartial('info', [
+            'model' => $model,
+            'strictThumb' => null,
+        ]);
     }
 
     /**

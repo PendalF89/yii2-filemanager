@@ -30,6 +30,8 @@ class FileInput extends InputWidget
         if (empty($this->buttonOptions['id'])) {
             $this->buttonOptions['id'] = $this->options['id'] . '-btn';
         }
+
+        $this->buttonOptions['role'] = 'filemanager-launch';
     }
 
     /**
@@ -56,6 +58,7 @@ class FileInput extends InputWidget
         $modal = $this->renderFile('@vendor/pendalf89/yii2-filemanager/views/file/modal.php', [
             'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
+            'frameId' => $this->options['id'] . '-frame',
             'frameSrc' => Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']),
             'thumb' => $this->thumb,
         ]);

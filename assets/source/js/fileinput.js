@@ -1,38 +1,62 @@
 $(document).ready(function() {
-    var modalElem = $("#filemanager-modal"),
-        btnElem = $("#" + modalElem.attr("data-btn-id")),
-        inputElem = $("#" + modalElem.attr("data-input-id")),
-        iframe = '<iframe src="' + modalElem.attr("data-frame-src") + '" id="filemanager-frame" frameborder="0"></iframe>';
+//    var modalElem = $('[role="filemanager-modal"]'),
+//        inputElem = $("#" + modalElem.attr("data-input-id"));
+
 
     function getFormData(form) {
         var formArray = form.serializeArray(),
+            modelMap = {
+                'Mediafile[alt]': 'alt',
+                'Mediafile[description]': 'description',
+                url: 'url'
+            },
             data = [];
 
         for (var i=0; formArray.length > i; i++) {
-            data[formArray[i].name] = formArray[i].value;
+            if (modelMap[formArray[i].name]) {
+                data[modelMap[formArray[i].name]] = formArray[i].value;
+            }
         }
 
         return data;
     }
 
     function frameHandler(e) {
-        $(this).contents().find(".dashboard").on("click", "#insert-btn", insertHandler);
+        var modal = $(this).parents('[role="filemanager-modal"]'),
+            input = $("#" + modal.attr("data-input-id"));
+
+        $(this).contents().find(".dashboard").on("click", "#insert-btn", function(e) {
+            e.preventDefault();
+
+            var data = getFormData($(this).parents("#control-form"));
+
+            input.trigger("fileInsert", [data]);
+            input.val(data['url']);
+            modal.modal("hide");
+        });
     }
 
-    function insertHandler(e) {
+//    function insertHandler(e) {
+//        e.preventDefault();
+//
+//        var data = getFormData($(this).parents("#control-form"));
+//
+//        console.log( $(this) );
+//
+//        inputElem.trigger("fileInsert", [data]);
+//        inputElem.val(data['url']);
+//        modalElem.modal("hide");
+//    }
+
+    $('[role="filemanager-launch"]').on("click", function(e) {
         e.preventDefault();
 
-        var data = getFormData($(this).parents("form"));
-        inputElem.trigger("fileInsert", [data]);
-        inputElem.val(data['image']);
-        modalElem.modal("hide");
-    }
+        var modal = $('[data-btn-id="' + $(this).attr("id") + '"]'),
+            iframe = $('<iframe src="' + modal.attr("data-frame-src")
+                + '" id="' + modal.attr("data-frame-id") + '" frameborder="0" role="filemanager-frame"></iframe>');
 
-    btnElem.on("click", function(e) {
-        e.preventDefault();
-
-        modalElem.find(".modal-body").html(iframe);
-        $("#filemanager-frame").on("load", frameHandler);
-        $("#filemanager-modal").modal("show");
+        iframe.on("load", frameHandler);
+        modal.find(".modal-body").html(iframe);
+        modal.modal("show");
     });
 });

@@ -17,9 +17,16 @@ use yii\web\JsExpression;
         'options' => ['class' => 'form-control'],
         'thumb' => 'original',
         'callbackBeforeInsert' => 'function(e, data) {
-            alert(123);
-            console.log( data.image );
-        }'
+            console.log( data );
+        }',
+    ]); ?>
+
+    <?= $form->field($model, 'title')->widget(FileInput::className(), [
+        'options' => ['class' => 'form-control'],
+        'thumb' => 'large',
+        'callbackBeforeInsert' => 'function(e, data) {
+            console.log( data.url );
+        }',
     ]); ?>
 
 <?php ActiveForm::end(); ?>
