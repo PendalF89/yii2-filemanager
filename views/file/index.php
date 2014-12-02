@@ -3,6 +3,7 @@
 use yii\widgets\ActiveForm;
 use pendalf89\blog\models\Post;
 use pendalf89\filemanager\widgets\FileInput;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
@@ -15,6 +16,10 @@ use pendalf89\filemanager\widgets\FileInput;
     <?= $form->field($model, 'original_thumbnail')->widget(FileInput::className(), [
         'options' => ['class' => 'form-control'],
         'thumb' => 'original',
+        'callbackBeforeInsert' => 'function(e, data) {
+            alert(123);
+            console.log( data.image );
+        }'
     ]); ?>
 
 <?php ActiveForm::end(); ?>

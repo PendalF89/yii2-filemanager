@@ -77,15 +77,4 @@ $(document).ready(function() {
             }
         });
     });
-
-
-    console.log( strictThumb );
-
-//    fileInfoContainer.on("click", "#insert-btn", function(e) {
-//        e.preventDefault();
-//
-//        var data = $('[name="image"]').val();
-//
-//        console.log( data );
-//    });
 });

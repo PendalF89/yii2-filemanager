@@ -4,6 +4,7 @@ namespace pendalf89\filemanager\widgets;
 use Yii;
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
+use yii\web\View;
 use pendalf89\filemanager\assets\FileInputAsset;
 
 class FileInput extends InputWidget
@@ -19,6 +20,8 @@ class FileInput extends InputWidget
     public $thumb = '';
 
     public $options = ['class' => 'form-control'];
+
+    public $callbackBeforeInsert = '';
 
     public function init()
     {
@@ -42,7 +45,13 @@ class FileInput extends InputWidget
 
         $replace['{button}'] = Html::tag($this->buttonTag, $this->buttonName, $this->buttonOptions);
 
-        FileInputAsset::register($this->getView());
+        FileInputAsset::register($this->view);
+
+        if (!empty($this->callbackBeforeInsert)) {
+            $this->view->registerJs('
+                $("#' . $this->options['id'] . '").on("fileInsert", ' . $this->callbackBeforeInsert . ');'
+            );
+        }
 
         $modal = $this->renderFile('@vendor/pendalf89/yii2-filemanager/views/file/modal.php', [
             'inputId' => $this->options['id'],

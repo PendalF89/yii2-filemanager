@@ -2,7 +2,6 @@ $(document).ready(function() {
     var modalElem = $("#filemanager-modal"),
         btnElem = $("#" + modalElem.attr("data-btn-id")),
         inputElem = $("#" + modalElem.attr("data-input-id")),
-        //thumb = modalElem.attr("data-thumb"),
         iframe = '<iframe src="' + modalElem.attr("data-frame-src") + '" id="filemanager-frame" frameborder="0"></iframe>';
 
     function getFormData(form) {
@@ -24,6 +23,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         var data = getFormData($(this).parents("form"));
+        inputElem.trigger("fileInsert", [data]);
         inputElem.val(data['image']);
         modalElem.modal("hide");
     }
@@ -35,10 +35,4 @@ $(document).ready(function() {
         $("#filemanager-frame").on("load", frameHandler);
         $("#filemanager-modal").modal("show");
     });
-
-//    console.log( modalElem.attr("data-thumb") );
-//
-//    if (modalElem.attr("data-thumb")) {
-//        alert(123);
-//    }
 });
