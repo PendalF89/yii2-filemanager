@@ -13,11 +13,12 @@ $bundle = FilemanagerAsset::register($this);
 ?>
 
 <?= Html::img($model->getDefaultThumbUrl($bundle->baseUrl)) ?>
+
 <ul class="detail">
     <li><?= $model->type ?></li>
     <li><?= Yii::$app->formatter->asDatetime($model->getLastChanges()) ?></li>
     <?php if ($model->isImage()) : ?>
-        <li><?= $model->getImageSize($this->context->module->routes) ?></li>
+        <li><?= $model->getOriginalImageSize($this->context->module->routes) ?></li>
     <?php endif; ?>
     <li><?= $model->getFileSize() ?></li>
     <li><?= Html::a(Module::t('main', 'Delete'), ['/filemanager/file/delete/', 'id' => $model->id],
@@ -34,7 +35,7 @@ $bundle = FilemanagerAsset::register($this);
 
 <?php $form = ActiveForm::begin([
     'action' => ['/filemanager/file/update', 'id' => $model->id],
-    'options' => ['class' => 'form-update'],
+    'options' => ['id' => 'control-form'],
 ]); ?>
     <?php if ($model->isImage()) : ?>
         <?= $form->field($model, 'alt')->textInput(['class' => 'form-control input-sm']); ?>
@@ -42,10 +43,37 @@ $bundle = FilemanagerAsset::register($this);
 
     <?= $form->field($model, 'description')->textarea(['class' => 'form-control input-sm']); ?>
 
+    <?php if ($model->isImage()) : ?>
+        <div class="form-group">
+            <?= Html::label(Module::t('main', 'Select image size'), 'image', ['class' => 'control-label']) ?>
+
+            <?= Html::dropDownList('image', null, $model->getImagesList($this->context->module), [
+                'class' => 'form-control input-sm'
+            ]) ?>
+            <div class="help-block"></div>
+        </div>
+    <?php endif; ?>
+
+    <?= Html::button(Module::t('main', 'Insert'), ['id' => 'insert-btn', 'class' => 'btn btn-primary btn-sm']) ?>
+
     <?= Html::submitButton(Module::t('main', 'Save'), ['class' => 'btn btn-success btn-sm']) ?>
 
     <?php if ($message = Yii::$app->session->getFlash('mediafileUpdateResult')) : ?>
-        <span class="text-success"><?= $message ?></span>
+        <div class="text-success"><?= $message ?></div>
     <?php endif; ?>
-
 <?php ActiveForm::end(); ?>
+
+
+<?php //if ($model->isImage()) : ?>
+<!---->
+<!--    --><?//= Html::beginForm('', 'post', ['id' => 'insert-form', 'class' => 'form-inline']) ?>
+<!---->
+<!--        <div class="control-label">--><?//= Module::t('main', 'Select image size') ?><!--</div>-->
+<!---->
+<!--        --><?//= Html::submitButton(Module::t('main', 'Insert'), ['class' => 'btn btn-primary btn-sm']) ?>
+<!---->
+<!---->
+<!---->
+<!--    --><?//= Html::endForm() ?>
+<!---->
+<?php //endif; ?>

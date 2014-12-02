@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    var ajaxRequest = null;
+    var ajaxRequest = null,
+        fileInfoContainer = $("#fileinfo");
 
     function setAjaxLoader() {
         $("#fileinfo").html('<div class="loading"><span class="glyphicon glyphicon-refresh spin"></span></div>');
@@ -31,7 +32,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#fileinfo").on("click", '[role="delete"]', function(e) {
+    fileInfoContainer.on("click", '[role="delete"]', function(e) {
         e.preventDefault();
 
         var url = $(this).attr("href"),
@@ -57,7 +58,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#fileinfo").on("submit", ".form-update", function(e) {
+    fileInfoContainer.on("submit", "#control-form", function(e) {
         e.preventDefault();
 
         var url = $(this).attr("action"),
@@ -75,4 +76,12 @@ $(document).ready(function() {
             }
         });
     });
+
+//    fileInfoContainer.on("click", "#insert-btn", function(e) {
+//        e.preventDefault();
+//
+//        var data = $('[name="image"]').val();
+//
+//        console.log( data );
+//    });
 });

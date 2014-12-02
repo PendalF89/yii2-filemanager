@@ -11,6 +11,8 @@ return [
     'Delete' => 'Удалить',
     'Created' => 'Создан',
     'Updated' => 'Обновлён',
+    'Insert' => 'Вставить',
+    'Original' => 'Оригинальный',
     'Settings' => 'Настройки',
     'File manager' => 'Файловый менеджер',
     'File manager module' => 'Модуль «Файловый менеджер»',
@@ -26,4 +28,5 @@ return [
     'Alt attribute' => 'Атрибут alt',
     'Changes not saved.' => 'Изменения не сохранены.',
     'Changes saved!' => 'Изменения сохранены!',
+    'Select image size' => 'Выберите размер изображения',
 ];

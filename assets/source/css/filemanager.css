@@ -31,6 +31,8 @@
   color: #5ba6f7;
 }
 .list-view .items .item a img {
+  min-width: 128px;
+  min-height: 128px;
   opacity: .8;
 }
 .list-view .items .item a img:hover {
@@ -64,7 +66,7 @@
     #DASHBOARD
 \*------------------------------------*/
 .dashboard {
-  width: 298px;
+  width: 290px;
   float: left;
   padding-left: 10px;
 }
@@ -102,12 +104,16 @@
   clear: both;
   margin-bottom: 5px;
 }
-#fileinfo .form-update .control-label {
-  font-size: .9em;
+#fileinfo #control-form .form-group {
   margin-bottom: 0;
 }
-#fileinfo .form-update .form-group {
+#fileinfo #control-form .control-label {
   margin-bottom: 0;
+  font-size: .9em;
+  font-weight: bold;
+}
+#fileinfo #control-form textarea {
+  max-width: 100%;
 }
 /*------------------------------------*\
     #SPIN ICONS

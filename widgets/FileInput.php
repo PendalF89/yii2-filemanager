@@ -43,6 +43,7 @@ class FileInput extends InputWidget
         FileInputAsset::register($this->getView());
 
         $modal = $this->renderFile('@vendor/pendalf89/yii2-filemanager/views/file/modal.php', [
+            'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
             'frameSrc' => Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']),
         ]);

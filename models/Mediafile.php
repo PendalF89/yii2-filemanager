@@ -223,6 +223,26 @@ class Mediafile extends ActiveRecord
     }
 
     /**
+     * @param Module $module
+     * @return array images list
+     */
+    public function getImagesList(Module $module)
+    {
+        $thumbs = $this->getThumbs();
+        $list = [];
+
+        foreach ($thumbs as $alias => $url) {
+            $preset = $module->thumbs[$alias];
+            $list[$url] = $preset['name'] . ' ' . $preset['size'][0] . ' × ' . $preset['size'][1];
+        }
+
+        $originalImageSize = $this->getOriginalImageSize($module->routes);
+        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
+
+        return $list;
+    }
+
+    /**
      * Delete thumbnails for current image
      * @param array $routes see routes in module config
      */
@@ -277,9 +297,9 @@ class Mediafile extends ActiveRecord
      * @param string $delimiter delimiter between width and height
      * @return string image size like '1366x768'
      */
-    public function getImageSize(array $routes, $delimiter = ' × ')
+    public function getOriginalImageSize(array $routes, $delimiter = ' × ')
     {
-        $imageSizes = $this->getImageSizes($routes);
+        $imageSizes = $this->getOriginalImageSizes($routes);
         return "$imageSizes[0]$delimiter$imageSizes[1]";
     }
 
@@ -288,7 +308,7 @@ class Mediafile extends ActiveRecord
      * @param array $routes see routes in module config
      * @return array
      */
-    public function getImageSizes(array $routes)
+    public function getOriginalImageSizes(array $routes)
     {
         $basePath = Yii::getAlias($routes['basePath']);
         return getimagesize("$basePath/{$this->url}");

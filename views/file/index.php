@@ -17,3 +17,5 @@ use pendalf89\filemanager\widgets\FileInput;
     ]); ?>
 
 <?php ActiveForm::end(); ?>
+
+<!--<iframe src="/admin/filemanager/file/filemanager" id="filemanager-frame" frameborder="0"></iframe>-->

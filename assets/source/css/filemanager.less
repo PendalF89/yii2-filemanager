@@ -44,6 +44,8 @@
                 color: @main-color;
 
                 img {
+                    min-width: 128px;
+                    min-height: 128px;
                     opacity: .8;
 
                     &:hover {
@@ -99,7 +101,7 @@
 \*------------------------------------*/
 
 .dashboard {
-    width: 298px;
+    width: 290px;
     float: left;
     padding-left: 10px;
 
@@ -156,14 +158,19 @@
         margin-bottom: 5px;
     }
 
-    .form-update {
-        .control-label {
-            font-size: .9em;
+    #control-form {
+        .form-group {
             margin-bottom: 0;
         }
 
-        .form-group {
+        .control-label {
             margin-bottom: 0;
+            font-size: .9em;
+            font-weight: bold;
+        }
+
+        textarea {
+            max-width: 100%;
         }
     }
 }
