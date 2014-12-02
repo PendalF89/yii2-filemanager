@@ -223,6 +223,21 @@ class Mediafile extends ActiveRecord
     }
 
     /**
+     * @param string $alias thumb alias
+     * @return string thumb url
+     */
+    public function getThumbByAlias($alias)
+    {
+        $thumbs = $this->getThumbs();
+
+        if ($alias === 'original') {
+            return $this->url;
+        }
+
+        return !empty($thumbs[$alias]) ? $thumbs[$alias] : '';
+    }
+
+    /**
      * @param Module $module
      * @return array images list
      */

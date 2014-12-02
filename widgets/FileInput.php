@@ -16,6 +16,8 @@ class FileInput extends InputWidget
 
     public $buttonOptions = ['class' => 'btn btn-default'];
 
+    public $thumb = '';
+
     public $options = ['class' => 'form-control'];
 
     public function init()
@@ -46,6 +48,7 @@ class FileInput extends InputWidget
             'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
             'frameSrc' => Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']),
+            'thumb' => $this->thumb,
         ]);
 
         return strtr($this->template, $replace) . $modal;

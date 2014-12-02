@@ -44,10 +44,10 @@ $bundle = FilemanagerAsset::register($this);
     <?= $form->field($model, 'description')->textarea(['class' => 'form-control input-sm']); ?>
 
     <?php if ($model->isImage()) : ?>
-        <div class="form-group">
+        <div class="form-group<?= $strictThumb ? ' hidden' : '' ?>">
             <?= Html::label(Module::t('main', 'Select image size'), 'image', ['class' => 'control-label']) ?>
 
-            <?= Html::dropDownList('image', null, $model->getImagesList($this->context->module), [
+            <?= Html::dropDownList('image', $model->getThumbByAlias($strictThumb), $model->getImagesList($this->context->module), [
                 'class' => 'form-control input-sm'
             ]) ?>
             <div class="help-block"></div>
@@ -62,18 +62,3 @@ $bundle = FilemanagerAsset::register($this);
         <div class="text-success"><?= $message ?></div>
     <?php endif; ?>
 <?php ActiveForm::end(); ?>
-
-
-<?php //if ($model->isImage()) : ?>
-<!---->
-<!--    --><?//= Html::beginForm('', 'post', ['id' => 'insert-form', 'class' => 'form-inline']) ?>
-<!---->
-<!--        <div class="control-label">--><?//= Module::t('main', 'Select image size') ?><!--</div>-->
-<!---->
-<!--        --><?//= Html::submitButton(Module::t('main', 'Insert'), ['class' => 'btn btn-primary btn-sm']) ?>
-<!---->
-<!---->
-<!---->
-<!--    --><?//= Html::endForm() ?>
-<!---->
-<?php //endif; ?>

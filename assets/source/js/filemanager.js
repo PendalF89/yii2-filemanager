@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var ajaxRequest = null,
-        fileInfoContainer = $("#fileinfo");
+        fileInfoContainer = $("#fileinfo"),
+        strictThumb = $(window.parent.document.getElementById("filemanager-modal")).attr("data-thumb");
 
     function setAjaxLoader() {
         $("#fileinfo").html('<div class="loading"><span class="glyphicon glyphicon-refresh spin"></span></div>');
@@ -22,7 +23,7 @@ $(document).ready(function() {
         ajaxRequest = $.ajax({
             type: "GET",
             url: url,
-            data: "id=" + id,
+            data: "id=" + id + "&strictThumb=" + strictThumb,
             beforeSend: function() {
                 setAjaxLoader();
             },
@@ -76,6 +77,9 @@ $(document).ready(function() {
             }
         });
     });
+
+
+    console.log( strictThumb );
 
 //    fileInfoContainer.on("click", "#insert-btn", function(e) {
 //        e.preventDefault();

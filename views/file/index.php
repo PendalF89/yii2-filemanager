@@ -14,8 +14,7 @@ use pendalf89\filemanager\widgets\FileInput;
 
     <?= $form->field($model, 'original_thumbnail')->widget(FileInput::className(), [
         'options' => ['class' => 'form-control'],
+        'thumb' => 'original',
     ]); ?>
 
 <?php ActiveForm::end(); ?>
-
-<!--<iframe src="/admin/filemanager/file/filemanager" id="filemanager-frame" frameborder="0"></iframe>-->

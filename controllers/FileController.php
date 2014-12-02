@@ -151,12 +151,16 @@ class FileController extends Controller
     }
 
     /** Render model info
-     * @param $id
+     * @param int $id
+     * @param string $strictThumb only this thumb will be selected
      * @return string
      */
-    public function actionInfo($id)
+    public function actionInfo($id, $strictThumb = null)
     {
         $model = Mediafile::findOne($id);
-        return $this->renderPartial('info', ['model' => $model]);
+        return $this->renderPartial('info', [
+            'model' => $model,
+            'strictThumb' => $strictThumb,
+        ]);
     }
 }
