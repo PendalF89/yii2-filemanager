@@ -1,7 +1,4 @@
 $(document).ready(function() {
-//    var modalElem = $('[role="filemanager-modal"]'),
-//        inputElem = $("#" + modalElem.attr("data-input-id"));
-
 
     function getFormData(form) {
         var formArray = form.serializeArray(),
@@ -23,6 +20,7 @@ $(document).ready(function() {
 
     function frameHandler(e) {
         var modal = $(this).parents('[role="filemanager-modal"]'),
+            imageContainer = $(modal.attr("data-image-container")),
             input = $("#" + modal.attr("data-input-id"));
 
         $(this).contents().find(".dashboard").on("click", "#insert-btn", function(e) {
@@ -31,22 +29,15 @@ $(document).ready(function() {
             var data = getFormData($(this).parents("#control-form"));
 
             input.trigger("fileInsert", [data]);
+
+            if (imageContainer) {
+                imageContainer.html('<img src="' + data.url + '" alt="' + data.alt + '">');
+            }
+
             input.val(data['url']);
             modal.modal("hide");
         });
     }
-
-//    function insertHandler(e) {
-//        e.preventDefault();
-//
-//        var data = getFormData($(this).parents("#control-form"));
-//
-//        console.log( $(this) );
-//
-//        inputElem.trigger("fileInsert", [data]);
-//        inputElem.val(data['url']);
-//        modalElem.modal("hide");
-//    }
 
     $('[role="filemanager-launch"]').on("click", function(e) {
         e.preventDefault();

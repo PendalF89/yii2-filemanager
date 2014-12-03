@@ -19,9 +19,13 @@ class FileInput extends InputWidget
 
     public $thumb = '';
 
-    public $options = ['class' => 'form-control'];
+    public $imageContainer = '';
+
+    public $hideInputField = false;
 
     public $callbackBeforeInsert = '';
+
+    public $options = ['class' => 'form-control'];
 
     public function init()
     {
@@ -61,6 +65,8 @@ class FileInput extends InputWidget
             'frameId' => $this->options['id'] . '-frame',
             'frameSrc' => Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']),
             'thumb' => $this->thumb,
+            'imageContainer' => $this->imageContainer,
+            'hideInputField' => $this->hideInputField ? 'true' : 'false',
         ]);
 
         return strtr($this->template, $replace) . $modal;

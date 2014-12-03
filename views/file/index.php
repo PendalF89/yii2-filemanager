@@ -11,11 +11,24 @@ use yii\web\JsExpression;
 <?php $model = new Post();?>
 <?php $model = Post::findOne(1);?>
 
+<style>
+    .img {
+        width: 200px;
+    }
+
+    .img img {
+        max-width: 100%;
+    }
+</style>
+<div class="img"></div>
+
 <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'original_thumbnail')->widget(FileInput::className(), [
         'options' => ['class' => 'form-control'],
         'thumb' => 'original',
+        'imageContainer' => '.img',
+        'hideInputField' => true,
         'callbackBeforeInsert' => 'function(e, data) {
             console.log( data );
         }',
