@@ -1,45 +1,17 @@
 <?php
 
-use yii\widgets\ActiveForm;
-use pendalf89\blog\models\Post;
-use pendalf89\filemanager\widgets\FileInput;
-use yii\web\JsExpression;
+
+use pendalf89\filemanager\Module;
+use pendalf89\filemanager\assets\ModalAsset;
 
 /* @var $this yii\web\View */
-/* @var $form yii\widgets\ActiveForm */
+
+$this->title = Module::t('main', 'Files');
+$this->params['breadcrumbs'][] = ['label' => Module::t('main', 'File manager'), 'url' => ['/filemanager/default/index']];
+$this->params['breadcrumbs'][] = $this->title;
+
+ModalAsset::register($this);
+
 ?>
-<?php $model = new Post();?>
-<?php $model = Post::findOne(1);?>
 
-<style>
-    .img {
-        width: 200px;
-    }
-
-    .img img {
-        max-width: 100%;
-    }
-</style>
-<div class="img"></div>
-
-<?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'original_thumbnail')->widget(FileInput::className(), [
-        'options' => ['class' => 'form-control'],
-        'thumb' => 'original',
-        'imageContainer' => '.img',
-        'hideInputField' => true,
-        'callbackBeforeInsert' => 'function(e, data) {
-            console.log( data );
-        }',
-    ]); ?>
-
-    <?= $form->field($model, 'title')->widget(FileInput::className(), [
-        'options' => ['class' => 'form-control'],
-        'thumb' => 'large',
-        'callbackBeforeInsert' => 'function(e, data) {
-            console.log( data.url );
-        }',
-    ]); ?>
-
-<?php ActiveForm::end(); ?>
+<iframe src="/admin/filemanager/file/filemanager" id="post-original_thumbnail-frame" frameborder="0" role="filemanager-frame"></iframe>

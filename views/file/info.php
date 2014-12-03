@@ -56,6 +56,8 @@ $bundle = FilemanagerAsset::register($this);
         <?= Html::hiddenInput('url', $model->url) ?>
     <?php endif; ?>
 
+    <?= Html::hiddenInput('id', $model->id) ?>
+
     <?= Html::button(Module::t('main', 'Insert'), ['id' => 'insert-btn', 'class' => 'btn btn-primary btn-sm']) ?>
 
     <?= Html::submitButton(Module::t('main', 'Save'), ['class' => 'btn btn-success btn-sm']) ?>

@@ -5,7 +5,8 @@ $(document).ready(function() {
             modelMap = {
                 'Mediafile[alt]': 'alt',
                 'Mediafile[description]': 'description',
-                url: 'url'
+                url: 'url',
+                id: 'id'
             },
             data = [];
 
@@ -21,6 +22,7 @@ $(document).ready(function() {
     function frameHandler(e) {
         var modal = $(this).parents('[role="filemanager-modal"]'),
             imageContainer = $(modal.attr("data-image-container")),
+            pasteData = modal.attr("data-paste-data"),
             input = $("#" + modal.attr("data-input-id"));
 
         $(this).contents().find(".dashboard").on("click", "#insert-btn", function(e) {
@@ -34,7 +36,7 @@ $(document).ready(function() {
                 imageContainer.html('<img src="' + data.url + '" alt="' + data.alt + '">');
             }
 
-            input.val(data['url']);
+            input.val(data[pasteData]);
             modal.modal("hide");
         });
     }

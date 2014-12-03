@@ -4,7 +4,7 @@
      data-btn-id="<?= $btnId ?>"
      data-input-id="<?= $inputId ?>"
      data-image-container="<?= $imageContainer ?>"
-     data-hide-input-field="<?= $imageContainer ?>"
+     data-paste-data="<?= $pasteData ?>"
      data-thumb="<?= $thumb ?>">
     <div class="modal-dialog">
         <div class="modal-content">

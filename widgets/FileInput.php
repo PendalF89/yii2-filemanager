@@ -4,29 +4,96 @@ namespace pendalf89\filemanager\widgets;
 use Yii;
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
-use yii\web\View;
 use pendalf89\filemanager\assets\FileInputAsset;
 
+/**
+ * Class FileInput
+ *
+ * Basic example of usage:
+ *
+ *  <?= FileInput::widget([
+ *      'name' => 'mediafile',
+ *      'buttonTag' => 'button',
+ *      'buttonName' => 'Browse',
+ *      'buttonOptions' => ['class' => 'btn btn-default'],
+ *      'options' => ['class' => 'form-control'],
+ *      // Widget template
+ *      'template' => '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>',
+ *      // Optional, if set, only this image can be selected by user
+ *      'thumb' => 'original',
+ *      // Optional, if set, in container will be inserted selected image
+ *      'imageContainer' => '.img',
+ *      // Default to FileInput::DATA_URL. This data will be inserted in input field
+ *      'pasteData' => FileInput::DATA_URL,
+ *      // JavaScript function, which will be called before insert file data to input.
+ *      // Argument data contains file data.
+ *      // data example: [alt: "Witch with cat", description: "123", url: "/uploads/2014/12/vedma-100x100.jpeg", id: "45"]
+ *      'callbackBeforeInsert' => 'function(e, data) {
+ *      console.log( data );
+ *      }',
+ *  ]) ?>
+ *
+ * This class provides filemanager usage. You can optional select all media file info to your input field.
+ * More samples of usage see on github: https://github.com/PendalF89/yii2-filemanager
+ *
+ * @package pendalf89\filemanager\widgets
+ * @author Zabolotskikh Boris <zabolotskich@bk.ru>
+ */
 class FileInput extends InputWidget
 {
+    /**
+     * @var string widget template
+     */
     public $template = '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>';
 
+    /**
+     * @var string button tag
+     */
     public $buttonTag = 'button';
 
+    /**
+     * @var string button name
+     */
     public $buttonName = 'Browse';
 
+    /**
+     * @var array button html options
+     */
     public $buttonOptions = ['class' => 'btn btn-default'];
 
+    /**
+     * @var string Optional, if set, only this image can be selected by user
+     */
     public $thumb = '';
 
+    /**
+     * @var string Optional, if set, in container will be inserted selected image
+     */
     public $imageContainer = '';
 
-    public $hideInputField = false;
-
+    // JavaScript function, which will be called before insert file data to input.
+    // Argument data contains file data.
+    // data example: [alt: "Witch with cat", description: "123", url: "/uploads/2014/12/vedma-100x100.jpeg", id: "45"]
     public $callbackBeforeInsert = '';
 
+    /**
+     * @var string This data will be inserted in input field
+     */
+    public $pasteData = self::DATA_URL;
+
+    /**
+     * @var array widget html options
+     */
     public $options = ['class' => 'form-control'];
 
+    const DATA_ID = 'id';
+    const DATA_URL = 'url';
+    const DATA_ALT = 'alt';
+    const DATA_DESCRIPTION = 'description';
+
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
@@ -66,7 +133,7 @@ class FileInput extends InputWidget
             'frameSrc' => Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']),
             'thumb' => $this->thumb,
             'imageContainer' => $this->imageContainer,
-            'hideInputField' => $this->hideInputField ? 'true' : 'false',
+            'pasteData' => $this->pasteData,
         ]);
 
         return strtr($this->template, $replace) . $modal;
