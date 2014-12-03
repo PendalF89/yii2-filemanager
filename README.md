@@ -18,7 +18,7 @@ Screenshots
 
 <img src="http://zabolotskikh.com/wp-content/uploads/2014/12/yii2-filemanager-index.png">
 
-<img src="http://zabolotskikh.com/wp-content/uploads/2014/12/yii2-filemanager-files-in-admin">
+<img src="http://zabolotskikh.com/wp-content/uploads/2014/12/yii2-filemanager-files-in-admin.png">
 
 <img src="http://zabolotskikh.com/wp-content/uploads/2014/12/yii2-filemanager-settings.png">
 
