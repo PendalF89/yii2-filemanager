@@ -12,7 +12,7 @@ class m141203_173402_create_filemanager_mediafiles_table extends Migration
             'mediafile_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'owner_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'owner' => Schema::TYPE_STRING . ' NOT NULL',
-            'type' => Schema::TYPE_STRING . ' NOT NULL',
+            'owner_attribute' => Schema::TYPE_STRING . ' NOT NULL',
         ]);
     }
 

@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
 use yii\imagine\Image;
 use yii\data\ActiveDataProvider;
 use pendalf89\filemanager\Module;
+use pendalf89\filemanager\models\Mediafiles;
 
 /**
  * This is the model class for table "filemanager_mediafile".
@@ -183,6 +184,48 @@ class Mediafile extends ActiveRecord
         $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
         $basePath = Yii::getAlias($routes['basePath']);
         Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+    }
+
+    /**
+     * Add owner to mediafiles table
+     *
+     * @param int $owner_id owner id
+     * @param string $owner owner identification name
+     * @param string $owner_attribute owner identification attribute
+     * @return bool save result
+     */
+    public function addOwner($owner_id, $owner, $owner_attribute)
+    {
+        $mediafiles = new Mediafiles();
+        $mediafiles->mediafile_id = $this->id;
+        $mediafiles->owner = $owner;
+        $mediafiles->owner_id = $owner_id;
+        $mediafiles->owner_attribute = $owner_attribute;
+
+        return $mediafiles->save();
+    }
+
+    /**
+     * Remove owner from mediafiles table
+     *
+     * @param int $owner_id owner id
+     * @param string $owner owner identification name
+     * @param string $owner_attribute owner identification attribute
+     * @return bool delete result
+     */
+    public function removeOwner($owner_id, $owner, $owner_attribute)
+    {
+        $mediafiles = Mediafiles::findOne([
+            'owner_id' => $owner_id,
+            'owner' => $owner,
+            'owner_attribute' => $owner_attribute,
+        ]);
+
+        if ($mediafiles) {
+            return $mediafiles->delete();
+        }
+
+        return false;
     }
 
     /**

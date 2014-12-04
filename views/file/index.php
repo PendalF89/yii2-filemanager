@@ -1,6 +1,5 @@
 <?php
 
-
 use pendalf89\filemanager\Module;
 use pendalf89\filemanager\assets\ModalAsset;
 
@@ -11,7 +10,6 @@ $this->params['breadcrumbs'][] = ['label' => Module::t('main', 'File manager'), 
 $this->params['breadcrumbs'][] = $this->title;
 
 ModalAsset::register($this);
-
 ?>
 
 <iframe src="/admin/filemanager/file/filemanager" id="post-original_thumbnail-frame" frameborder="0" role="filemanager-frame"></iframe>
