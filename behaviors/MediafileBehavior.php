@@ -37,8 +37,9 @@ class MediafileBehavior extends Behavior
     public function addOwners()
     {
         foreach ($this->attributes as $attr) {
-            $mediafile = $this->loadModel($this->owner->$attr);
-            $mediafile->addOwner($this->owner->primaryKey, $this->name, $attr);
+            if ($mediafile = $this->loadModel($this->owner->$attr)) {
+                $mediafile->addOwner($this->owner->primaryKey, $this->name, $attr);
+            }
         }
     }
 
@@ -48,9 +49,10 @@ class MediafileBehavior extends Behavior
     public function updateOwners()
     {
         foreach ($this->attributes as $attr) {
-            $mediafile = $this->loadModel($this->owner->$attr);
             Mediafile::removeOwner($this->owner->primaryKey, $this->name, $attr);
-            $mediafile->addOwner($this->owner->primaryKey, $this->name, $attr);
+            if ($mediafile = $this->loadModel($this->owner->$attr)) {
+                $mediafile->addOwner($this->owner->primaryKey, $this->name, $attr);
+            }
         }
     }
 

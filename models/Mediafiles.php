@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "filemanager_mediafiles".
  *
- * @property integer $id
  * @property integer $mediafile_id
  * @property integer $owner_id
  * @property string $owner
