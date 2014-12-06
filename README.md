@@ -85,6 +85,8 @@ Configuration:
 
 Usage
 ------------
+In view files:
+
 ```php
 echo $form->field($model, 'original_thumbnail')->widget(FileInput::className(), [
     'buttonTag' => 'button',
@@ -128,4 +130,35 @@ echo FileInput::widget([
         console.log( data );
     }',
 ]);
+```
+
+In model you must set mediafile behavior like this example:
+
+```php
+public function behaviors()
+{
+    return [
+        'mediafile' => [
+            'class' => MediafileBehavior::className(),
+            'name' => 'post',
+            'attributes' => [
+                'thumbnail',
+            ],
+        ]
+    ];
+}
+```
+
+Than, you may get mediafile from your owner model.
+See example:
+
+```php
+$model = Post::findOne(1);
+$mediafile = Mediafile::loadOneByOwner('post', $model->id, 'thumbnail');
+
+// Ok, we have mediafile object! Let's do something with him:
+// return url for small thumbnail, for example: '/uploads/2014/12/flying-cats.jpg'
+echo $mediafile->getThumbUrl('small');
+// return image tag for thumbnail, for example: '<img src="/uploads/2014/12/flying-cats.jpg" alt="Летающие коты">'
+echo $mediafile->getThumbImage('small'); // return url for small thumbnail
 ```
