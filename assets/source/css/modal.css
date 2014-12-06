@@ -1,6 +1,9 @@
 /*------------------------------------*\
     #MODAL
 \*------------------------------------*/
+[role="filemanager-modal"] {
+  z-index: 70000;
+}
 [role="filemanager-modal"] .modal-title {
   font-size: 1.2em;
 }
