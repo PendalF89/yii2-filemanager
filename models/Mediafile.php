@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\imagine\Image;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
 use pendalf89\filemanager\Module;
 use pendalf89\filemanager\models\Owners;
 
@@ -292,7 +293,7 @@ class Mediafile extends ActiveRecord
      * @param string $alias thumb alias
      * @return string thumb url
      */
-    public function getThumbByAlias($alias)
+    public function getThumbUrl($alias)
     {
         $thumbs = $this->getThumbs();
 
@@ -301,6 +302,28 @@ class Mediafile extends ActiveRecord
         }
 
         return !empty($thumbs[$alias]) ? $thumbs[$alias] : '';
+    }
+
+    /**
+     * Thumbnail image html tag
+     *
+     * @param string $alias thumbnail alias
+     * @param array $options html options
+     * @return string Html image tag
+     */
+    public function getThumbImage($alias, $options=[])
+    {
+        $url = $this->getThumbUrl($alias);
+
+        if (empty($url)) {
+            return '';
+        }
+
+        if (empty($options)) {
+            $options['alt'] = $this->alt;
+        }
+
+        return Html::img($url, $options);
     }
 
     /**
@@ -423,5 +446,20 @@ class Mediafile extends ActiveRecord
     public static function findByTypes(array $types)
     {
         return self::find()->filterWhere(['in', 'type', $types])->all();
+    }
+
+    public static function loadOneByOwner($owner, $owner_id, $owner_attribute)
+    {
+        $owner = Owners::findOne([
+            'owner' => $owner,
+            'owner_id' => $owner_id,
+            'owner_attribute' => $owner_attribute,
+        ]);
+
+        if ($owner) {
+            return $owner->mediafile;
+        }
+
+        return false;
     }
 }
