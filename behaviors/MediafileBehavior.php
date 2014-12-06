@@ -4,70 +4,73 @@ namespace pendalf89\filemanager\behaviors;
 use yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use pendalf89\filemanager\models\Mediafile;
 
 class MediafileBehavior extends Behavior
 {
-    public $in_attribute = 'name';
-    public $out_attribute = 'slug';
-    public $translit = true;
+    /**
+     * @var string owner name
+     */
+    public $name = '';
 
+    /**
+     * @var array owner mediafiles attributes names
+     */
+    public $attributes = [];
+
+    /**
+     * @inheritdoc
+     * @return array
+     */
     public function events()
     {
         return [
-            ActiveRecord::EVENT_BEFORE_VALIDATE => 'getSlug'
+            ActiveRecord::EVENT_AFTER_INSERT => 'addOwners',
+            ActiveRecord::EVENT_AFTER_UPDATE => 'updateOwners',
+            ActiveRecord::EVENT_BEFORE_DELETE => 'deleteOwners',
         ];
     }
 
-    public function getSlug( $event )
+    /**
+     * Add owners to mediafile
+     */
+    public function addOwners()
     {
-        if ( empty( $this->owner->{$this->out_attribute} ) ) {
-            $this->owner->{$this->out_attribute} = $this->generateSlug( $this->owner->{$this->in_attribute} );
-        } else {
-            $this->owner->{$this->out_attribute} = $this->generateSlug( $this->owner->{$this->out_attribute} );
+        foreach ($this->attributes as $attr) {
+            $mediafile = $this->loadModel($this->owner->$attr);
+            $mediafile->addOwner($this->owner->primaryKey, $this->name, $attr);
         }
     }
 
-    private function generateSlug( $slug )
+    /**
+     * Update owners of mediafile
+     */
+    public function updateOwners()
     {
-        $slug = $this->slugify( $slug );
-        if ( $this->checkUniqueSlug( $slug ) ) {
-            return $slug;
-        } else {
-            for ( $suffix = 2; !$this->checkUniqueSlug( $new_slug = $slug . '-' . $suffix ); $suffix++ ) {}
-            return $new_slug;
+        foreach ($this->attributes as $attr) {
+            $mediafile = $this->loadModel($this->owner->$attr);
+            Mediafile::removeOwner($this->owner->primaryKey, $this->name, $attr);
+            $mediafile->addOwner($this->owner->primaryKey, $this->name, $attr);
         }
     }
 
-    private function slugify( $slug )
+    /**
+     * Delete owners of mediafile
+     */
+    public function deleteOwners()
     {
-        if ( $this->translit ) {
-            return Inflector::slug( TransliteratorHelper::process( $slug ), '-', true );
-        } else {
-            return $this->slug( $slug, '-', true );
+        foreach ($this->attributes as $attr) {
+            Mediafile::removeOwner($this->owner->primaryKey, $this->name, $attr);
         }
     }
 
-    private function slug( $string, $replacement = '-', $lowercase = true )
+    /**
+     * Load model by id
+     * @param int $id
+     * @return Mediafile
+     */
+    private function loadModel($id)
     {
-        $string = preg_replace( '/[^\p{L}\p{Nd}]+/u', $replacement, $string );
-        $string = trim( $string, $replacement );
-        return $lowercase ? strtolower( $string ) : $string;
-    }
-
-    private function checkUniqueSlug( $slug )
-    {
-        $pk = $this->owner->primaryKey();
-        $pk = $pk[0];
-
-        $condition = $this->out_attribute . ' = :out_attribute';
-        $params = [ ':out_attribute' => $slug ];
-        if ( !$this->owner->isNewRecord ) {
-            $condition .= ' and ' . $pk . ' != :pk';
-            $params[':pk'] = $this->owner->{$pk};
-        }
-
-        return !$this->owner->find()
-            ->where( $condition, $params )
-            ->one();
+        return Mediafile::findOne($id);
     }
 }
