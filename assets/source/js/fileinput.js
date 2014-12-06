@@ -52,4 +52,11 @@ $(document).ready(function() {
         modal.find(".modal-body").html(iframe);
         modal.modal("show");
     });
+
+    $('[role="clear-input"]').on("click", function(e) {
+        e.preventDefault();
+
+        $("#" + $(this).attr("data-clear-element-id")).val("");
+        $($(this).attr("data-image-container")).empty();
+    });
 });

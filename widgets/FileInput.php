@@ -44,7 +44,7 @@ class FileInput extends InputWidget
     /**
      * @var string widget template
      */
-    public $template = '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>';
+    public $template = '<div class="input-group">{input}<span class="input-group-btn">{button}{reset-button}</span></div>';
 
     /**
      * @var string button tag
@@ -60,6 +60,21 @@ class FileInput extends InputWidget
      * @var array button html options
      */
     public $buttonOptions = ['class' => 'btn btn-default'];
+
+    /**
+     * @var string reset button tag
+     */
+    public $resetButtonTag = 'button';
+
+    /**
+     * @var string reset button name
+     */
+    public $resetButtonName = '<span class="text-danger glyphicon glyphicon-remove"></span>';
+
+    /**
+     * @var array reset button html options
+     */
+    public $resetButtonOptions = ['class' => 'btn btn-default'];
 
     /**
      * @var string Optional, if set, only this image can be selected by user
@@ -103,6 +118,9 @@ class FileInput extends InputWidget
         }
 
         $this->buttonOptions['role'] = 'filemanager-launch';
+        $this->resetButtonOptions['role'] = 'clear-input';
+        $this->resetButtonOptions['data-clear-element-id'] = $this->options['id'];
+        $this->resetButtonOptions['data-image-container'] = $this->imageContainer;
     }
 
     /**
@@ -117,6 +135,7 @@ class FileInput extends InputWidget
         }
 
         $replace['{button}'] = Html::tag($this->buttonTag, $this->buttonName, $this->buttonOptions);
+        $replace['{reset-button}'] = Html::tag($this->resetButtonTag, $this->resetButtonName, $this->resetButtonOptions);
 
         FileInputAsset::register($this->view);
 
