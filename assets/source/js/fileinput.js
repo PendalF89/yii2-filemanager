@@ -1,23 +1,49 @@
-$(document).ready(function() {
+function filemanagerTinyMCE(callback, value, meta) {
+    var inputId = tinymce.activeEditor.settings.id,
+        modal = $('[data-btn-id="' + inputId + '-btn"]'),
+        iframe = $('<iframe src="' + modal.attr("data-frame-src")
+            + '" id="' + modal.attr("data-frame-id") + '" frameborder="0" role="filemanager-frame"></iframe>');
 
-    function getFormData(form) {
-        var formArray = form.serializeArray(),
-            modelMap = {
-                'Mediafile[alt]': 'alt',
-                'Mediafile[description]': 'description',
-                url: 'url',
-                id: 'id'
-            },
-            data = [];
+    iframe.on("load", function() {
+        var modal = $(this).parents('[role="filemanager-modal"]'),
+            input = $("#" + modal.attr("data-input-id"));
 
-        for (var i=0; formArray.length > i; i++) {
-            if (modelMap[formArray[i].name]) {
-                data[modelMap[formArray[i].name]] = formArray[i].value;
-            }
+        $(this).contents().find(".dashboard").on("click", "#insert-btn", function(e) {
+            e.preventDefault();
+
+            var data = getFormData($(this).parents("#control-form"));
+
+            input.trigger("fileInsert", [data]);
+
+            callback(data.url, {alt: data.alt});
+            modal.modal("hide");
+        });
+    });
+
+    modal.find(".modal-body").html(iframe);
+    modal.modal("show");
+}
+
+function getFormData(form) {
+    var formArray = form.serializeArray(),
+        modelMap = {
+            'Mediafile[alt]': 'alt',
+            'Mediafile[description]': 'description',
+            url: 'url',
+            id: 'id'
+        },
+        data = [];
+
+    for (var i=0; formArray.length > i; i++) {
+        if (modelMap[formArray[i].name]) {
+            data[modelMap[formArray[i].name]] = formArray[i].value;
         }
-
-        return data;
     }
+
+    return data;
+}
+
+$(document).ready(function() {
 
     function frameHandler(e) {
         var modal = $(this).parents('[role="filemanager-modal"]'),

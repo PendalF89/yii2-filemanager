@@ -86,9 +86,11 @@ class FileInput extends InputWidget
      */
     public $imageContainer = '';
 
-    // JavaScript function, which will be called before insert file data to input.
-    // Argument data contains file data.
-    // data example: [alt: "Witch with cat", description: "123", url: "/uploads/2014/12/vedma-100x100.jpeg", id: "45"]
+    /**
+     * @var string JavaScript function, which will be called before insert file data to input.
+     * Argument data contains file data.
+     * data example: [alt: "Witch with cat", description: "123", url: "/uploads/2014/12/vedma-100x100.jpeg", id: "45"]
+     */
     public $callbackBeforeInsert = '';
 
     /**
