@@ -15,7 +15,8 @@
         "yiisoft/yii2": "*",
         "yiisoft/yii2-imagine": "*",
         "pendalf89/yii2-tinymce": "*",
-        "kartik-v/yii2-widgets": "*"
+        "kartik-v/yii2-widgets": "*",
+        "2amigos/yii2-file-upload-widget": "*"
     },
     "autoload": {
         "psr-4": {
