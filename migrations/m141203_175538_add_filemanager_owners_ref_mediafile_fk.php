@@ -3,13 +3,13 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m141203_175538_add_filemanager_mediafiles_ref_mediafile_fk extends Migration
+class m141203_175538_add_filemanager_owners_ref_mediafile_fk extends Migration
 {
     public function up()
     {
         $this->addForeignKey(
-            'filemanager_mediafiles_ref_mediafile',
-            'filemanager_mediafiles',
+            'filemanager_owners_ref_mediafile',
+            'filemanager_owners',
             'mediafile_id',
             'filemanager_mediafile',
             'id',
@@ -20,6 +20,6 @@ class m141203_175538_add_filemanager_mediafiles_ref_mediafile_fk extends Migrati
 
     public function down()
     {
-        $this->dropForeignKey('filemanager_mediafiles_ref_mediafile', 'filemanager_mediafiles');
+        $this->dropForeignKey('filemanager_owners_ref_mediafile', 'filemanager_owners');
     }
 }

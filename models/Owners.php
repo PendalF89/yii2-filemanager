@@ -14,14 +14,14 @@ use Yii;
  *
  * @property Mediafile $mediafile
  */
-class Mediafiles extends \yii\db\ActiveRecord
+class Owners extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'filemanager_mediafiles';
+        return 'filemanager_owners';
     }
 
     /**

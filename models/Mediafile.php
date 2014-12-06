@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 use yii\imagine\Image;
 use yii\data\ActiveDataProvider;
 use pendalf89\filemanager\Module;
-use pendalf89\filemanager\models\Mediafiles;
+use pendalf89\filemanager\models\Owners;
 
 /**
  * This is the model class for table "filemanager_mediafile".
@@ -24,6 +24,7 @@ use pendalf89\filemanager\models\Mediafiles;
  * @property string $thumbs
  * @property integer $created_at
  * @property integer $updated_at
+ * @property Owners[] $owners
  */
 class Mediafile extends ActiveRecord
 {
@@ -86,6 +87,28 @@ class Mediafile extends ActiveRecord
                 ],
             ]
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOwners()
+    {
+        return $this->hasMany(Owners::className(), ['mediafile_id' => 'id']);
+    }
+
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+
+            foreach ($this->owners as $owner) {
+                $owner->delete();
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -196,7 +219,7 @@ class Mediafile extends ActiveRecord
      */
     public function addOwner($owner_id, $owner, $owner_attribute)
     {
-        $mediafiles = new Mediafiles();
+        $mediafiles = new Owners();
         $mediafiles->mediafile_id = $this->id;
         $mediafiles->owner = $owner;
         $mediafiles->owner_id = $owner_id;
@@ -206,7 +229,7 @@ class Mediafile extends ActiveRecord
     }
 
     /**
-     * Remove owner from mediafiles table
+     * Remove this mediafile owner
      *
      * @param int $owner_id owner id
      * @param string $owner owner identification name
@@ -215,7 +238,7 @@ class Mediafile extends ActiveRecord
      */
     public static function removeOwner($owner_id, $owner, $owner_attribute)
     {
-        $mediafiles = Mediafiles::findOne([
+        $mediafiles = Owners::findOne([
             'owner_id' => $owner_id,
             'owner' => $owner,
             'owner_attribute' => $owner_attribute,
