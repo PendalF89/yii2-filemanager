@@ -4,6 +4,7 @@ This module provide interface to collect and access all mediafiles in one place.
 
 Features
 ------------
+* Integrated with TinyMCE editor.
 * Automatically create actually directory for uploaded files like "2014/12".
 * Automatically create thumbs for uploaded images
 * Unlimited number of sets of miniatures
@@ -130,6 +131,24 @@ echo FileInput::widget([
         console.log( data );
     }',
 ]);
+```
+
+With TinyMCE:
+```php
+use pendalf89\filemanager\widgets\TinyMCE;
+
+<?= $form->field($model, 'content')->widget(TinyMCE::className(), [
+    'clientOptions' => [
+           'language' => 'ru',
+        'menubar' => false,
+        'height' => 500,
+        'image_dimensions' => false,
+        'plugins' => [
+            'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code contextmenu table',
+        ],
+        'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+    ],
+]); ?>
 ```
 
 In model you must set mediafile behavior like this example:
