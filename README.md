@@ -154,6 +154,8 @@ use pendalf89\filemanager\widgets\TinyMCE;
 In model you must set mediafile behavior like this example:
 
 ```php
+use pendalf89\filemanager\behaviors\MediafileBehavior;
+
 public function behaviors()
 {
     return [
@@ -172,6 +174,8 @@ Than, you may get mediafile from your owner model.
 See example:
 
 ```php
+use pendalf89\filemanager\models\Mediafile;
+
 $model = Post::findOne(1);
 $mediafile = Mediafile::loadOneByOwner('post', $model->id, 'thumbnail');
 
