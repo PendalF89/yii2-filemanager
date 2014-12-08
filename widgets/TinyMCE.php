@@ -5,9 +5,9 @@ use Yii;
 use yii\widgets\InputWidget;
 use yii\web\JsExpression;
 use pendalf89\filemanager\assets\FileInputAsset;
-use pendalf89\tinymce\TinyMce as TinyMCEWidget;
+use pendalf89\tinymce\TinyMce as TinyMceWidget;
 
-class TinyMCE extends InputWidget
+class TinyMce extends InputWidget
 {
     /**
      * @var string Optional, if set, only this image can be selected by user
@@ -56,7 +56,7 @@ class TinyMCE extends InputWidget
             $this->clientOptions['convert_urls'] = false;
         }
 
-        $this->tinyMCE = TinyMCEWidget::widget([
+        $this->tinyMCE = TinyMceWidget::widget([
             'name' => $this->name,
             'model' => $this->model,
             'attribute' => $this->attribute,
