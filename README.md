@@ -86,9 +86,11 @@ Configuration:
 
 Usage
 ------------
-In view files:
+Simple standalone field:
 
 ```php
+use pendalf89\filemanager\widgets\FileInput;
+
 echo $form->field($model, 'original_thumbnail')->widget(FileInput::className(), [
     'buttonTag' => 'button',
     'buttonName' => 'Browse',
