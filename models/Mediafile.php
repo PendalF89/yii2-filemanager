@@ -319,7 +319,7 @@ class Mediafile extends ActiveRecord
             return '';
         }
 
-        if (empty($options)) {
+        if (empty($options['alt'])) {
             $options['alt'] = $this->alt;
         }
 
