@@ -4,6 +4,7 @@ use pendalf89\filemanager\assets\FilemanagerAsset;
 use pendalf89\filemanager\Module;
 use yii\widgets\ListView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel pendalf89\filemanager\models\Mediafile */
@@ -13,7 +14,7 @@ $this->params['moduleBundle'] = FilemanagerAsset::register($this);
 
 <header id="header"><span class="glyphicon glyphicon-picture"></span> <?= Module::t('main', 'File manager') ?></header>
 
-<div id="filemanager" data-url-info="<?= Yii::$app->urlManager->createUrl(['/filemanager/file/info']) ?>">
+<div id="filemanager" data-url-info="<?= Url::to(['file/info']) ?>">
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'layout' => '<div class="items">{items}</div>{pager}',
@@ -30,7 +31,7 @@ $this->params['moduleBundle'] = FilemanagerAsset::register($this);
 
     <div class="dashboard">
         <p><?= Html::a('<span class="glyphicon glyphicon-upload"></span> ' . Module::t('main', 'Upload manager'),
-                ['/filemanager/file/uploadmanager'], ['class' => 'btn btn-default']) ?></p>
+                ['file/uploadmanager'], ['class' => 'btn btn-default']) ?></p>
         <div id="fileinfo">
 
         </div>

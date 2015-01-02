@@ -6,6 +6,7 @@ use yii\widgets\InputWidget;
 use yii\web\JsExpression;
 use pendalf89\filemanager\assets\FileInputAsset;
 use pendalf89\tinymce\TinyMce as TinyMceWidget;
+use yii\helpers\Url;
 
 class TinyMce extends InputWidget
 {
@@ -82,7 +83,7 @@ class TinyMce extends InputWidget
             'inputId' => $this->options['id'],
             'btnId' => $this->options['id'] . '-btn',
             'frameId' => $this->options['id'] . '-frame',
-            'frameSrc' => Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']),
+            'frameSrc' => Url::to(['file/filemanager']),
             'thumb' => $this->thumb,
         ]);
 

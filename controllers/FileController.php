@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use pendalf89\filemanager\Module;
 use pendalf89\filemanager\models\Mediafile;
 use pendalf89\filemanager\assets\FilemanagerAsset;
+use yii\helpers\Url;
 
 class FileController extends Controller
 {
@@ -83,7 +84,7 @@ class FileController extends Controller
             'name'          => $model->filename,
             'type'          => $model->type,
             'size'          => $model->file->size,
-            'deleteUrl'     => Yii::$app->urlManager->createUrl(['/filemanager/file/delete', 'id' => $model->id]),
+            'deleteUrl'     => Url::to(['file/delete', 'id' => $model->id]),
             'deleteType'    => 'POST',
         ];
 
@@ -150,7 +151,7 @@ class FileController extends Controller
         }
 
         Yii::$app->session->setFlash('successResize');
-        $this->redirect(Yii::$app->urlManager->createUrl(['/filemanager/default/settings']));
+        $this->redirect(Url::to(['default/settings']));
     }
 
     /** Render model info

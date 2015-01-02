@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 
 $this->title = Module::t('main', 'Settings');
-$this->params['breadcrumbs'][] = ['label' => Module::t('main', 'File manager'), 'url' => ['/filemanager/default/index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('main', 'File manager'), 'url' => ['default/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endforeach; ?>
             </ul>
             <p><?= Module::t('main', 'If you change the thumbnails sizes, it is strongly recommended to make resize all thumbnails.') ?></p>
-            <?= Html::a(Module::t('main', 'Do resize thumbnails'), ['/filemanager/file/resize'], ['class' => 'btn btn-danger']) ?>
+            <?= Html::a(Module::t('main', 'Do resize thumbnails'), ['file/resize'], ['class' => 'btn btn-danger']) ?>
         </div>
     </div>
 </div>

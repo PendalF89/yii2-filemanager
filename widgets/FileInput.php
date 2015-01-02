@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
 use pendalf89\filemanager\assets\FileInputAsset;
+use yii\helpers\Url;
 
 /**
  * Class FileInput
@@ -151,7 +152,7 @@ class FileInput extends InputWidget
             'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
             'frameId' => $this->options['id'] . '-frame',
-            'frameSrc' => Yii::$app->urlManager->createUrl(['filemanager/file/filemanager']),
+            'frameSrc' => Url::to(['file/filemanager']),
             'thumb' => $this->thumb,
             'imageContainer' => $this->imageContainer,
             'pasteData' => $this->pasteData,

@@ -20,11 +20,11 @@ $assetPath = FilemanagerAsset::register($this)->baseUrl;
 
             <div class="text-center">
                 <h2>
-                    <?= Html::a(Module::t('main', 'Files'), ['/filemanager/file/index']) ?>
+                    <?= Html::a(Module::t('main', 'Files'), ['file/index']) ?>
                 </h2>
                 <?= Html::a(
                     Html::img($assetPath . '/images/files.png', ['alt' => 'Files'])
-                    , ['/filemanager/file/index']
+                    , ['file/index']
                 ) ?>
             </div>
         </div>
@@ -33,11 +33,11 @@ $assetPath = FilemanagerAsset::register($this)->baseUrl;
 
             <div class="text-center">
                 <h2>
-                    <?= Html::a(Module::t('main', 'Settings'), ['/filemanager/default/settings']) ?>
+                    <?= Html::a(Module::t('main', 'Settings'), ['default/settings']) ?>
                 </h2>
                 <?= Html::a(
                     Html::img($assetPath . '/images/settings.png', ['alt' => 'Tools'])
-                    , ['/filemanager/default/settings']
+                    , ['default/settings']
                 ) ?>
             </div>
         </div>
