@@ -12,4 +12,4 @@ $this->params['breadcrumbs'][] = $this->title;
 ModalAsset::register($this);
 ?>
 
-<iframe src="/admin/filemanager/file/filemanager" id="post-original_thumbnail-frame" frameborder="0" role="filemanager-frame"></iframe>
+<iframe src="<?= Yii::$app->urlManager->createUrl('/filemanager/file/filemanager') ?>" id="post-original_thumbnail-frame" frameborder="0" role="filemanager-frame"></iframe>
