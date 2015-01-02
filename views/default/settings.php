@@ -1,7 +1,7 @@
 <?php
 
 use pendalf89\filemanager\Module;
-use kartik\widgets\Alert;
+use kartik\alert\Alert;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
