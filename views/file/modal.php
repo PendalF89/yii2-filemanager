@@ -3,8 +3,8 @@
      data-frame-src="<?= $frameSrc ?>"
      data-btn-id="<?= $btnId ?>"
      data-input-id="<?= $inputId ?>"
-     data-image-container="<?= is_set($imageContainer) ? $imageContainer : '' ?>"
-     data-paste-data="<?= is_set($pasteData) ? $pasteData : '' ?>"
+     data-image-container="<?= $imageContainer ?>"
+     data-paste-data="<?= $pasteData ?>"
      data-thumb="<?= $thumb ?>">
     <div class="modal-dialog">
         <div class="modal-content">
