@@ -13,4 +13,4 @@ $this->params['breadcrumbs'][] = $this->title;
 ModalAsset::register($this);
 ?>
 
-<iframe src="<?= Url::to(['/filemanager/file/filemanager']) ?>" id="post-original_thumbnail-frame" frameborder="0" role="filemanager-frame"></iframe>
+<iframe src="<?= Url::to(['file/filemanager']) ?>" id="post-original_thumbnail-frame" frameborder="0" role="filemanager-frame"></iframe>
