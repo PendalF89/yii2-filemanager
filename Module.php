@@ -9,6 +9,12 @@ class Module extends \yii\base\Module
     public $controllerNamespace = 'pendalf89\filemanager\controllers';
 
     /**
+     *  Set true if you want to rename files if the name is already in use 
+     * @var bolean 
+     */
+    public $rename = false;
+    
+    /**
      * @var array upload routes
      */
     public $routes = [
