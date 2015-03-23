@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
 use yii\imagine\Image;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Inflector;
 use pendalf89\filemanager\Module;
 use pendalf89\filemanager\models\Owners;
 
@@ -117,7 +118,7 @@ class Mediafile extends ActiveRecord
      * @param array $routes routes from module settings
      * @return bool
      */
-    public function saveUploadedFile(array $routes)
+    public function saveUploadedFile(array $routes, $rename = false)
     {
         $year = date('Y', time());
         $month = date('m', time());
@@ -132,13 +133,21 @@ class Mediafile extends ActiveRecord
 
         // get file instance
         $this->file = UploadedFile::getInstance($this, 'file');
-        $filename = $this->file->name;
-        $url = "$structure/$filename";
 
-        // checks for existing url in db
-        if (self::findByUrl($url)) {
-            return false;
-        }
+        //if a file with the same name already exist append a number
+        $counter = 0;
+        do{
+            if($counter==0)
+                $filename = Inflector::slug($this->file->baseName).'.'. $this->file->extension;
+            else{
+                //if we don't want to rename we finish the call here
+                if($rename == false)
+                    return false;
+                $filename = Inflector::slug($this->file->baseName).'-'.$counter.'.'. $this->file->extension;
+            }
+            $url = "$structure/$filename";
+            $counter++;
+        }while(self::findByUrl($url)); // checks for existing url in db
 
         // save original uploaded file
         $this->file->saveAs("$absolutePath/$filename");
@@ -157,7 +166,7 @@ class Mediafile extends ActiveRecord
      * @param array $presets thumbs presets. See in module config
      * @return bool
      */
-    public function createThumbs(array $routes, array $presets)
+    public function createThumbs(array $routes, array $presets, array $options = [])
     {
         $thumbs = [];
         $basePath = $basePath = Yii::getAlias($routes['basePath']);
@@ -174,7 +183,7 @@ class Mediafile extends ActiveRecord
 
             $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
 
-            Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+            Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl", $options);
 
             $thumbs[$alias] = $thumbUrl;
         }
@@ -193,7 +202,7 @@ class Mediafile extends ActiveRecord
      *
      * @param array $routes see routes in module config
      */
-    public function createDefaultThumb(array $routes)
+    public function createDefaultThumb(array $routes, array $options = [])
     {
         $originalFile = pathinfo($this->url);
         $dirname = $originalFile['dirname'];
@@ -207,7 +216,7 @@ class Mediafile extends ActiveRecord
         $height = $size[1];
         $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
         $basePath = Yii::getAlias($routes['basePath']);
-        Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+        Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl", $options);
     }
 
     /**
@@ -355,10 +364,9 @@ class Mediafile extends ActiveRecord
         $basePath = Yii::getAlias($routes['basePath']);
 
         foreach ($this->getThumbs() as $thumbUrl) {
-            unlink("$basePath/$thumbUrl");
+            @unlink("$basePath/$thumbUrl");
         }
-
-        unlink("$basePath/{$this->getDefaultThumbUrl()}");
+        @unlink("$basePath/{$this->getDefaultThumbUrl()}");
     }
 
     /**

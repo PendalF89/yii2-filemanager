@@ -21,6 +21,29 @@ class Module extends \yii\base\Module
     ];
 
     /**
+     *  Set true if you want to rename files if the name is already in use
+     * @var bolean
+     */
+    public $rename = false;
+
+    /**
+     * @var array client options for dosamigos\fileupload\FileUploadUI
+     */
+    public $uploadClientOptions = [
+        'acceptFileTypes' => null, //in config new yii\web\JsExpression('/(\.|\/)(gif|jpe?g|png|pdf)$/i')
+        'maxFileSize' => 4194304,
+        'maxNumberOfFiles' => 20
+    ];
+
+    /**
+     *
+     * @var array options for save Image::save()
+     */
+    public $thumbsOptions = [
+        'quality'=>85,
+    ];
+
+    /**
      * @var array thumbnails info
      */
     public $thumbs = [

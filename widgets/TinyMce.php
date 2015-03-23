@@ -11,6 +11,11 @@ use yii\helpers\Url;
 class TinyMce extends InputWidget
 {
     /**
+     * @var string name of module in configuration
+     */
+    public $moduleName = 'filemanager';
+
+    /**
      * @var string Optional, if set, only this image can be selected by user
      */
     public $thumb = '';
@@ -83,7 +88,7 @@ class TinyMce extends InputWidget
             'inputId' => $this->options['id'],
             'btnId' => $this->options['id'] . '-btn',
             'frameId' => $this->options['id'] . '-frame',
-            'frameSrc' => Url::to(['file/filemanager']),
+            'frameSrc' => Url::to([$this->moduleName.'/file/filemanager']),
             'thumb' => $this->thumb,
         ]);
 

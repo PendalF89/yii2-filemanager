@@ -43,6 +43,11 @@ use yii\helpers\Url;
 class FileInput extends InputWidget
 {
     /**
+     * @var string name of module in configuration
+     */
+    public $moduleName = 'filemanager';
+    
+    /**
      * @var string widget template
      */
     public $template = '<div class="input-group">{input}<span class="input-group-btn">{button}{reset-button}</span></div>';
@@ -152,7 +157,7 @@ class FileInput extends InputWidget
             'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
             'frameId' => $this->options['id'] . '-frame',
-            'frameSrc' => Url::to(['file/filemanager']),
+            'frameSrc' => Url::to([$this->moduleName.'/file/filemanager']),
             'thumb' => $this->thumb,
             'imageContainer' => $this->imageContainer,
             'pasteData' => $this->pasteData,

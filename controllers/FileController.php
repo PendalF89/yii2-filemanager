@@ -58,7 +58,10 @@ class FileController extends Controller
     public function actionUploadmanager()
     {
         $this->layout = '@vendor/pendalf89/yii2-filemanager/views/layouts/main';
-        return $this->render('uploadmanager', ['model' => new Mediafile()]);
+        return $this->render('uploadmanager', [
+            'model' => new Mediafile(),
+            'uploadClientOptions' => $this->module->uploadClientOptions,
+        ]);
     }
 
     /**
@@ -71,7 +74,8 @@ class FileController extends Controller
 
         $model = new Mediafile();
         $routes = $this->module->routes;
-        $model->saveUploadedFile($routes);
+        $rename = $this->module->rename;
+        $model->saveUploadedFile($routes, $rename);
         $bundle = FilemanagerAsset::register($this->view);
 
         if ($model->isImage()) {
@@ -145,8 +149,8 @@ class FileController extends Controller
 
         foreach ($models as $model) {
             if ($model->isImage()) {
-                $model->deleteThumbs($routes);
-                $model->createThumbs($routes, $this->module->thumbs);
+                $model->deleteThumbs($routes, $this->module->thumbsOptions);
+                $model->createThumbs($routes, $this->module->thumbs, $this->module->thumbsOptions);
             }
         }
 

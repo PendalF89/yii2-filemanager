@@ -17,5 +17,6 @@ use yii\helpers\Html;
         'attribute' => 'file',
         'url' => ['upload'],
         'gallery' => false,
+        'clientOptions' => $uploadClientOptions,
     ]) ?>
 </div>
