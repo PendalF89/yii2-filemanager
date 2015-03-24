@@ -15,6 +15,9 @@ use yii\helpers\Html;
     <?= FileUploadUI::widget([
         'model' => $model,
         'attribute' => 'file',
+        'clientOptions' => [
+            'autoUpload'=> Yii::$app->getModule('filemanager')->autoUpload,
+        ],
         'url' => ['upload'],
         'gallery' => false,
     ]) ?>
