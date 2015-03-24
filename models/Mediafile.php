@@ -117,7 +117,7 @@ class Mediafile extends ActiveRecord
      * @param array $routes routes from module settings
      * @return bool
      */
-    public function saveUploadedFile(array $routes)
+    public function saveUploadedFile(array $routes, $rename = false)
     {
         $year = date('Y', time());
         $month = date('m', time());
@@ -132,14 +132,22 @@ class Mediafile extends ActiveRecord
 
         // get file instance
         $this->file = UploadedFile::getInstance($this, 'file');
-        $filename = $this->file->name;
-        $url = "$structure/$filename";
-
-        // checks for existing url in db
-        if (self::findByUrl($url)) {
-            return false;
-        }
-
+        
+        //if a file with the same name already exist append a number
+        $counter = 0;
+        do{
+            if($counter==0)
+                $filename = $this->file->name;
+            else{
+                //if we don't want to rename we finish the call here
+                if($rename == false)
+                    return false;
+                $filename = $this->file->baseName. $counter.'.'. $this->file->extension;  
+            }
+            $url = "$structure/$filename"; 
+            $counter++;
+        }while(self::findByUrl($url)); // checks for existing url in db
+       
         // save original uploaded file
         $this->file->saveAs("$absolutePath/$filename");
         $this->filename = $filename;

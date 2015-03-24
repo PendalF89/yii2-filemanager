@@ -83,7 +83,7 @@ class TinyMce extends InputWidget
             'inputId' => $this->options['id'],
             'btnId' => $this->options['id'] . '-btn',
             'frameId' => $this->options['id'] . '-frame',
-            'frameSrc' => Url::to(['file/filemanager']),
+            'frameSrc' => Url::to(['/filemanager/file/filemanager']),
             'thumb' => $this->thumb,
         ]);
 

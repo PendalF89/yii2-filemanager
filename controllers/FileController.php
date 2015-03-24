@@ -71,7 +71,8 @@ class FileController extends Controller
 
         $model = new Mediafile();
         $routes = $this->module->routes;
-        $model->saveUploadedFile($routes);
+        $rename = $this->module->rename;
+        $model->saveUploadedFile($routes, $rename);
         $bundle = FilemanagerAsset::register($this->view);
 
         if ($model->isImage()) {

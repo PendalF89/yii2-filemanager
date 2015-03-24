@@ -152,7 +152,7 @@ class FileInput extends InputWidget
             'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
             'frameId' => $this->options['id'] . '-frame',
-            'frameSrc' => Url::to(['file/filemanager']),
+            'frameSrc' => Url::to(['/filemanager/file/filemanager']),
             'thumb' => $this->thumb,
             'imageContainer' => $this->imageContainer,
             'pasteData' => $this->pasteData,
