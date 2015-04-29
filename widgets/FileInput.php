@@ -103,6 +103,12 @@ class FileInput extends InputWidget
      * @var array widget html options
      */
     public $options = ['class' => 'form-control'];
+    
+    /**
+     *
+     * @var array selecte the frameSrc in case you use a different module name
+     */
+    public $frameSrc  = ['/filemanager/file/filemanager'];
 
     const DATA_ID = 'id';
     const DATA_URL = 'url';
@@ -152,7 +158,7 @@ class FileInput extends InputWidget
             'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
             'frameId' => $this->options['id'] . '-frame',
-            'frameSrc' => Url::to(['/filemanager/file/filemanager']),
+            'frameSrc' => Url::to($this->frameSrc), 
             'thumb' => $this->thumb,
             'imageContainer' => $this->imageContainer,
             'pasteData' => $this->pasteData,
