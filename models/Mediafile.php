@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
 use yii\imagine\Image;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Inflector;
 use pendalf89\filemanager\Module;
 use pendalf89\filemanager\models\Owners;
 
@@ -132,22 +133,21 @@ class Mediafile extends ActiveRecord
 
         // get file instance
         $this->file = UploadedFile::getInstance($this, 'file');
-        
         //if a file with the same name already exist append a number
         $counter = 0;
         do{
             if($counter==0)
-                $filename = $this->file->name;
+                $filename = Inflector::slug($this->file->baseName).'.'. $this->file->extension;
             else{
                 //if we don't want to rename we finish the call here
                 if($rename == false)
                     return false;
-                $filename = $this->file->baseName. $counter.'.'. $this->file->extension;  
+                $filename = Inflector::slug($this->file->baseName). $counter.'.'. $this->file->extension;
             }
-            $url = "$structure/$filename"; 
+            $url = "$structure/$filename";
             $counter++;
-        }while(self::findByUrl($url)); // checks for existing url in db
-       
+        } while(self::findByUrl($url)); // checks for existing url in db
+
         // save original uploaded file
         $this->file->saveAs("$absolutePath/$filename");
         $this->filename = $filename;
