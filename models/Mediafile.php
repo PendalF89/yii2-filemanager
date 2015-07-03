@@ -311,7 +311,21 @@ class Mediafile extends ActiveRecord
 
         return !empty($thumbs[$alias]) ? $thumbs[$alias] : '';
     }
-
+    /**
+     * @param $baseUrl
+     * @return string default thumbnail for upload image
+     */
+    public function getDefaultUploadThumbUrl($baseUrl = '')
+    {
+        $size = Module::getDefaultThumbSize();
+        $originalFile = pathinfo($this->url);
+        $dirname = $originalFile['dirname'];
+        $filename = $originalFile['filename'];
+        $extension = $originalFile['extension'];
+        $width = $size[0];
+        $height = $size[1];
+        return Yii::getAlias('@web')."$dirname/$filename-{$width}x{$height}.$extension";
+    }
     /**
      * Thumbnail image html tag
      *
