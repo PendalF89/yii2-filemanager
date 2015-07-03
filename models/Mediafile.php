@@ -282,13 +282,25 @@ class Mediafile extends ActiveRecord
             $extension = $originalFile['extension'];
             $width = $size[0];
             $height = $size[1];
-
             return "$dirname/$filename-{$width}x{$height}.$extension";
         }
-
         return "$baseUrl/images/file.png";
     }
-
+    /**
+     * @param $baseUrl
+     * @return string default thumbnail for image
+     */
+    public function getDefaultUploadThumbUrl($baseUrl = '')
+    {
+        $size = Module::getDefaultThumbSize();
+        $originalFile = pathinfo($this->url);
+        $dirname = $originalFile['dirname'];
+        $filename = $originalFile['filename'];
+        $extension = $originalFile['extension'];
+        $width = $size[0];
+        $height = $size[1];
+        return Yii::getAlias('@web')."$dirname/$filename-{$width}x{$height}.$extension";
+    }
     /**
      * @return array thumbnails
      */
@@ -342,15 +354,13 @@ class Mediafile extends ActiveRecord
     {
         $thumbs = $this->getThumbs();
         $list = [];
+        $originalImageSize = $this->getOriginalImageSize($module->routes);
+        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
 
         foreach ($thumbs as $alias => $url) {
             $preset = $module->thumbs[$alias];
             $list[$url] = $preset['name'] . ' ' . $preset['size'][0] . ' × ' . $preset['size'][1];
         }
-
-        $originalImageSize = $this->getOriginalImageSize($module->routes);
-        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
-
         return $list;
     }
 
