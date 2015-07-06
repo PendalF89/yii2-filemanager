@@ -455,7 +455,16 @@ class Mediafile extends ActiveRecord
     {
         return self::findOne(['url' => $url]);
     }
-
+    /**
+     * Find model by id
+     *
+     * @param $url
+     * @return static
+     */
+    public static function findById($id)
+    {
+        return self::findOne(['id' => $id]);
+    }
     /**
      * Search models by file types
      * @param array $types file types
