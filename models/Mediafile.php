@@ -182,7 +182,7 @@ class Mediafile extends ActiveRecord
 
             $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
 
-            Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+            Image::thumbnail("$basePath/{$this->url}", $width, $height,'inset')->save("$basePath/$thumbUrl");
 
             $thumbs[$alias] = $thumbUrl;
         }
@@ -215,7 +215,7 @@ class Mediafile extends ActiveRecord
         $height = $size[1];
         $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
         $basePath = Yii::getAlias($routes['basePath']);
-        Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+        Image::thumbnail("$basePath/{$this->url}", $width, $height,'inset')->save("$basePath/$thumbUrl");
     }
 
     /**
@@ -292,13 +292,16 @@ class Mediafile extends ActiveRecord
      */
     public function getDefaultUploadThumbUrl($baseUrl = '')
     {
-        $size = Module::getDefaultThumbSize();
-        $originalFile = pathinfo($this->url);
-        $dirname = $originalFile['dirname'];
-        $filename = $originalFile['filename'];
-        $extension = $originalFile['extension'];
-        $width = $size[0];
-        $height = $size[1];
+        if ($this->isImage()) {
+            $size = Module::getDefaultThumbSize();
+            $originalFile = pathinfo($this->url);
+            $dirname = $originalFile['dirname'];
+            $filename = $originalFile['filename'];
+            $extension = $originalFile['extension'];
+            $width = $size[0];
+            $height = $size[1];
+            return Yii::getAlias('@web')."$dirname/$filename-{$width}x{$height}.$extension";
+        }
         return Yii::getAlias('@web')."$dirname/$filename-{$width}x{$height}.$extension";
     }
     /**
@@ -354,13 +357,15 @@ class Mediafile extends ActiveRecord
     {
         $thumbs = $this->getThumbs();
         $list = [];
-        $originalImageSize = $this->getOriginalImageSize($module->routes);
-        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
 
         foreach ($thumbs as $alias => $url) {
             $preset = $module->thumbs[$alias];
             $list[$url] = $preset['name'] . ' ' . $preset['size'][0] . ' × ' . $preset['size'][1];
         }
+
+        $originalImageSize = $this->getOriginalImageSize($module->routes);
+        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
+
         return $list;
     }
 
