@@ -13,7 +13,10 @@ class Module extends \yii\base\Module
      * @var bolean 
      */
     public $rename = false;
-    
+    /**
+     *  Set value to use your default language
+     */
+    private static $languages ='vi-VN';
      /**
      *  Set true to enable autoupload
      * @var bolean 
