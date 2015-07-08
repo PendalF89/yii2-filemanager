@@ -81,7 +81,9 @@ class Module extends \yii\base\Module
         if (!isset(Yii::$app->i18n->translations['modules/filemanager/*'])) {
             return $message;
         }
-
+        if($language == null){
+            $language=self::$languages;
+        }
         return Yii::t("modules/filemanager/$category", $message, $params, $language);
     }
 
