@@ -1,0 +1,154 @@
+/*------------------------------------*\
+    #VARIABLES
+\*------------------------------------*/
+/*------------------------------------*\
+    #MAIN
+\*------------------------------------*/
+#header {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 5px;
+}
+/*------------------------------------*\
+    #ITEMS
+\*------------------------------------*/
+.list-view {
+  float: left;
+  width: 660px;
+}
+.list-view .items {
+  border-right: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+.list-view .items .item {
+  display: inline-block;
+  margin-bottom: 3px;
+}
+.list-view .items .item a {
+  position: relative;
+  display: inline-block;
+  color: #5ba6f7;
+}
+.list-view .items .item a img {
+  min-width: 128px;
+  min-height: 128px;
+  opacity: .8;
+}
+.list-view .items .item a img:hover {
+  opacity: 1;
+}
+.list-view .items .item a .checked {
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  font-size: 3em;
+}
+.list-view .items .item .active {
+  outline: 5px solid #5ba6f7;
+  outline-offset: -5px;
+}
+.list-view .items .item .active img {
+  opacity: 1;
+}
+.list-view .items .item .active .checked {
+  display: inline-block;
+}
+/*------------------------------------*\
+    #PAGINATION
+\*------------------------------------*/
+.pagination {
+  display: block;
+  margin-top: 10px;
+}
+/*------------------------------------*\
+    #DASHBOARD
+\*------------------------------------*/
+.dashboard {
+  width: 290px;
+  float: left;
+  padding-left: 10px;
+}
+.dashboard .loading {
+  width: 298px;
+  margin-top: 50px;
+  font-size: 5em;
+  color: #5ba6f7;
+  text-align: center;
+}
+/*------------------------------------*\
+    #UPLOAD MANAGER
+\*------------------------------------*/
+#uploadmanager {
+  padding: 0 15px 0 0;
+}
+#uploadmanager .progress {
+  margin-top: 10px;
+}
+/*------------------------------------*\
+    #FILEINFO
+\*------------------------------------*/
+#fileinfo img {
+  float: left;
+  max-width: 82px;
+}
+#fileinfo .detail {
+  float: left;
+  margin: 0 0 0 10px;
+  padding: 0;
+  list-style: none;
+  font-size: .85em;
+}
+#fileinfo .filename {
+  clear: both;
+  margin-bottom: 5px;
+}
+#fileinfo #control-form .form-group {
+  margin-bottom: 0;
+}
+#fileinfo #control-form .control-label {
+  margin-bottom: 0;
+  font-size: .9em;
+  font-weight: bold;
+}
+#fileinfo #control-form textarea {
+  max-width: 100%;
+}
+/*------------------------------------*\
+    #SPIN ICONS
+\*------------------------------------*/
+.spin {
+  -webkit-animation: spin 1s infinite linear;
+  -moz-animation: spin 1s infinite linear;
+  -o-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  /* IE 9 */
+}
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
