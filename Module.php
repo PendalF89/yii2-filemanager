@@ -13,7 +13,10 @@ class Module extends \yii\base\Module
      * @var bolean 
      */
     public $rename = false;
-    
+    /**
+     *  Set value to use your default language
+     */
+    private static $languages ='vi-VN';
      /**
      *  Set true to enable autoupload
      * @var bolean 
@@ -78,7 +81,9 @@ class Module extends \yii\base\Module
         if (!isset(Yii::$app->i18n->translations['modules/filemanager/*'])) {
             return $message;
         }
-
+        if($language == null){
+            $language=self::$languages;
+        }
         return Yii::t("modules/filemanager/$category", $message, $params, $language);
     }
 

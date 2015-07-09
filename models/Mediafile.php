@@ -182,7 +182,7 @@ class Mediafile extends ActiveRecord
 
             $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
 
-            Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+            Image::thumbnail("$basePath/{$this->url}", $width, $height,'inset')->save("$basePath/$thumbUrl");
 
             $thumbs[$alias] = $thumbUrl;
         }
@@ -215,7 +215,7 @@ class Mediafile extends ActiveRecord
         $height = $size[1];
         $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
         $basePath = Yii::getAlias($routes['basePath']);
-        Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+        Image::thumbnail("$basePath/{$this->url}", $width, $height,'inset')->save("$basePath/$thumbUrl");
     }
 
     /**
@@ -354,13 +354,15 @@ class Mediafile extends ActiveRecord
     {
         $thumbs = $this->getThumbs();
         $list = [];
-        $originalImageSize = $this->getOriginalImageSize($module->routes);
-        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
 
         foreach ($thumbs as $alias => $url) {
             $preset = $module->thumbs[$alias];
             $list[$url] = $preset['name'] . ' ' . $preset['size'][0] . ' × ' . $preset['size'][1];
         }
+
+        $originalImageSize = $this->getOriginalImageSize($module->routes);
+        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
+
         return $list;
     }
 
