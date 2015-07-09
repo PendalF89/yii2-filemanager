@@ -292,16 +292,13 @@ class Mediafile extends ActiveRecord
      */
     public function getDefaultUploadThumbUrl($baseUrl = '')
     {
-        if ($this->isImage()) {
-            $size = Module::getDefaultThumbSize();
-            $originalFile = pathinfo($this->url);
-            $dirname = $originalFile['dirname'];
-            $filename = $originalFile['filename'];
-            $extension = $originalFile['extension'];
-            $width = $size[0];
-            $height = $size[1];
-            return Yii::getAlias('@web')."$dirname/$filename-{$width}x{$height}.$extension";
-        }
+        $size = Module::getDefaultThumbSize();
+        $originalFile = pathinfo($this->url);
+        $dirname = $originalFile['dirname'];
+        $filename = $originalFile['filename'];
+        $extension = $originalFile['extension'];
+        $width = $size[0];
+        $height = $size[1];
         return Yii::getAlias('@web')."$dirname/$filename-{$width}x{$height}.$extension";
     }
     /**

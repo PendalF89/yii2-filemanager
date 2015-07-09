@@ -25,6 +25,16 @@ class FileController extends Controller
                     'update' => ['post'],
                 ],
             ],
+			'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['file', 'filemanager', 'index', 'uploadmanager', 'delete','upload','update','resize','info'],
+                        'allow' => true,
+                        'roles' => ['Super Admin', 'Admin'],
+                    ]
+                ],
+            ],
         ];
     }
 
