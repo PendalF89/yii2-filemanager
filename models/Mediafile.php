@@ -12,6 +12,7 @@ use yii\helpers\Html;
 use yii\helpers\Inflector;
 use pendalf89\filemanager\Module;
 use pendalf89\filemanager\models\Owners;
+use Imagine\Image\ImageInterface;
 
 /**
  * This is the model class for table "filemanager_mediafile".
@@ -179,10 +180,11 @@ class Mediafile extends ActiveRecord
         foreach ($presets as $alias => $preset) {
             $width = $preset['size'][0];
             $height = $preset['size'][1];
+            $mode = (isset($preset['mode']) ? $preset['mode'] : ImageInterface::THUMBNAIL_OUTBOUND);
 
             $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
 
-            Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+            Image::thumbnail("$basePath/{$this->url}", $width, $height, $mode)->save("$basePath/$thumbUrl");
 
             $thumbs[$alias] = $thumbUrl;
         }

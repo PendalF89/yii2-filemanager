@@ -83,6 +83,25 @@ Configuration:
     ],
 ],
 ```
+By default, thumbnails are resized in "outbound" or "fill" mode. To switch to "inset" or "fit" mode, use `mode` parameter and provide. Possible values: `outbound` (`\Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND`) or `inset` (`\Imagine\Image\ImageInterface::THUMBNAIL_INSET`):
+
+```php
+'thumbs' => [
+    'small' => [
+        'name' => 'Мелкий',
+        'size' => [100, 100],
+    ],
+    'medium' => [
+        'name' => 'Средний',
+        'size' => [300, 200],
+    ],
+    'large' => [
+        'name' => 'Большой',
+        'size' => [500, 400],
+        'mode' => \Imagine\Image\ImageInterface::THUMBNAIL_INSET
+    ],
+],
+```
 
 Usage
 ------------
