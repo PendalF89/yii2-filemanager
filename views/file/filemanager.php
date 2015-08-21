@@ -20,12 +20,17 @@ $this->params['moduleBundle'] = FilemanagerAsset::register($this);
         'layout' => '<div class="items">{items}</div>{pager}',
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
-                return Html::a(
-                    Html::img($model->getDefaultThumbUrl($this->params['moduleBundle']->baseUrl))
-                    . '<span class="checked glyphicon glyphicon-check"></span>',
-                    '#mediafile',
-                    ['data-key' => $key]
-                );
+               if(file_exists(substr($model->getDefaultThumbUrl($this->params['moduleBundle']->baseUrl), 1))){
+                    return Html::a(
+                        Html::img(Yii::getAlias('@web').$model->getDefaultThumbUrl($this->params['moduleBundle']->baseUrl))
+                        . '<span class="checked glyphicon glyphicon-check"></span>',
+                        '#mediafile',
+                        ['data-key' => $key]
+                    );
+                }
+                else{
+                    return null;
+                }
             },
     ]) ?>
 

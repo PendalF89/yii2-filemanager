@@ -46,7 +46,7 @@ class FileInput extends InputWidget
      * @var string name of module in configuration
      */
     public $moduleName = 'filemanager';
-    
+
     /**
      * @var string widget template
      */

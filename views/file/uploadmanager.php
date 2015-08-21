@@ -15,8 +15,9 @@ use yii\helpers\Html;
     <?= FileUploadUI::widget([
         'model' => $model,
         'attribute' => 'file',
+        'clientOptions' => $uploadClientOptions,
         'url' => ['upload'],
         'gallery' => false,
-        'clientOptions' => $uploadClientOptions,
+
     ]) ?>
 </div>
