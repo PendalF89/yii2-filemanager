@@ -165,6 +165,7 @@ class Mediafile extends ActiveRecord
      *
      * @param array $routes see routes in module config
      * @param array $presets thumbs presets. See in module config
+     * @param array $options thumbs options. See in module config
      * @return bool
      */
     public function createThumbs(array $routes, array $presets, array $options = [])
@@ -203,6 +204,7 @@ class Mediafile extends ActiveRecord
      * Create default thumbnail
      *
      * @param array $routes see routes in module config
+     * @param array $options thumbs options. See in module config
      */
     public function createDefaultThumb(array $routes, array $options = [])
     {
