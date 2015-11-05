@@ -12,7 +12,7 @@ use pendalf89\filemanager\Module;
 $bundle = FilemanagerAsset::register($this);
 ?>
 
-<?= Html::img($model->getDefaultThumbUrl($bundle->baseUrl)) ?>
+<?= Html::img(Yii::getAlias('@web').$model->getDefaultThumbUrl($bundle->baseUrl)) ?>
 
 <ul class="detail">
     <li><?= $model->type ?></li>
