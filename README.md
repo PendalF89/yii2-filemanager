@@ -34,20 +34,20 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist pendalf89/yii2-filemanager "*"
+php composer.phar require --prefer-dist douglasmk/yii2-filemanager "*"
 ```
 
 or add
 
 ```
-"pendalf89/yii2-filemanager": "*"
+"douglasmk/yii2-filemanager": "*"
 ```
 
 to the require section of your `composer.json` file.
 
 Apply migration
 ```sh
-yii migrate --migrationPath=vendor/pendalf89/yii2-filemanager/migrations
+yii migrate --migrationPath=vendor/douglasmk/yii2-filemanager/migrations
 ```
 
 Configuration:
@@ -55,7 +55,7 @@ Configuration:
 ```php
 'modules' => [
     'filemanager' => [
-        'class' => 'pendalf89\filemanager\Module',
+        'class' => 'douglasmk\filemanager\Module',
         // Upload routes
         'routes' => [
             // Base absolute path to web directory
@@ -108,7 +108,7 @@ Usage
 Simple standalone field:
 
 ```php
-use pendalf89\filemanager\widgets\FileInput;
+use douglasmk\filemanager\widgets\FileInput;
 
 echo $form->field($model, 'original_thumbnail')->widget(FileInput::className(), [
     'buttonTag' => 'button',
@@ -156,7 +156,7 @@ echo FileInput::widget([
 
 With TinyMCE:
 ```php
-use pendalf89\filemanager\widgets\TinyMCE;
+use douglasmk\filemanager\widgets\TinyMCE;
 
 <?= $form->field($model, 'content')->widget(TinyMCE::className(), [
     'clientOptions' => [
@@ -175,7 +175,7 @@ use pendalf89\filemanager\widgets\TinyMCE;
 In model you must set mediafile behavior like this example:
 
 ```php
-use pendalf89\filemanager\behaviors\MediafileBehavior;
+use douglasmk\filemanager\behaviors\MediafileBehavior;
 
 public function behaviors()
 {
@@ -195,7 +195,7 @@ Than, you may get mediafile from your owner model.
 See example:
 
 ```php
-use pendalf89\filemanager\models\Mediafile;
+use douglasmk\filemanager\models\Mediafile;
 
 $model = Post::findOne(1);
 $mediafile = Mediafile::loadOneByOwner('post', $model->id, 'thumbnail');

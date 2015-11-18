@@ -1,6 +1,6 @@
 <?php
 
-namespace pendalf89\filemanager\models;
+namespace douglasmk\filemanager\models;
 
 use Yii;
 

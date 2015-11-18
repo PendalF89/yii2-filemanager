@@ -1,5 +1,5 @@
 <?php
-use pendalf89\filemanager\assets\FilemanagerAsset;
+use douglasmk\filemanager\assets\FilemanagerAsset;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */

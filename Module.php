@@ -1,25 +1,25 @@
 <?php
 
-namespace pendalf89\filemanager;
+namespace douglasmk\filemanager;
 
 use Yii;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'pendalf89\filemanager\controllers';
+    public $controllerNamespace = 'douglasmk\filemanager\controllers';
 
     /**
-     *  Set true if you want to rename files if the name is already in use 
-     * @var bolean 
+     *  Set true if you want to rename files if the name is already in use
+     * @var bolean
      */
     public $rename = false;
-    
+
      /**
      *  Set true to enable autoupload
-     * @var bolean 
+     * @var bolean
      */
     public $autoUpload = false;
-    
+
     /**
      * @var array upload routes
      */
@@ -66,7 +66,7 @@ class Module extends \yii\base\Module
         Yii::$app->i18n->translations['modules/filemanager/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en-US',
-            'basePath' => '@vendor/pendalf89/yii2-filemanager/messages',
+            'basePath' => '@vendor/douglasmk/yii2-filemanager/messages',
             'fileMap' => [
                 'modules/filemanager/main' => 'main.php',
             ],

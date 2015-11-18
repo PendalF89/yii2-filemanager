@@ -1,10 +1,10 @@
 <?php
-namespace pendalf89\filemanager\widgets;
+namespace douglasmk\filemanager\widgets;
 
 use Yii;
 use yii\widgets\InputWidget;
 use yii\web\JsExpression;
-use pendalf89\filemanager\assets\FileInputAsset;
+use douglasmk\filemanager\assets\FileInputAsset;
 use pendalf89\tinymce\TinyMce as TinyMceWidget;
 use yii\helpers\Url;
 
@@ -79,7 +79,7 @@ class TinyMce extends InputWidget
             );
         }
 
-        $modal = $this->renderFile('@vendor/pendalf89/yii2-filemanager/views/file/modal.php', [
+        $modal = $this->renderFile('@vendor/douglasmk/yii2-filemanager/views/file/modal.php', [
             'inputId' => $this->options['id'],
             'btnId' => $this->options['id'] . '-btn',
             'frameId' => $this->options['id'] . '-frame',

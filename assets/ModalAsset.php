@@ -1,12 +1,12 @@
 <?php
 
-namespace pendalf89\filemanager\assets;
+namespace douglasmk\filemanager\assets;
 
 use yii\web\AssetBundle;
 
 class ModalAsset extends AssetBundle
 {
-    public $sourcePath = '@vendor/pendalf89/yii2-filemanager/assets/source';
+    public $sourcePath = '@vendor/douglasmk/yii2-filemanager/assets/source';
     public $css = [
         'css/modal.css',
     ];
