@@ -12,11 +12,7 @@
     "minimum-stability": "dev",
     "prefer-stable" : true,
     "require": {
-        "yiisoft/yii2": "*",
-        "yiisoft/yii2-imagine": "*",
-        "pendalf89/yii2-tinymce": "*",
-        "kartik-v/yii2-widget-alert": "*",
-        "2amigos/yii2-file-upload-widget": "*"
+        "pendalf89/yii2-filemanager": "*"
     },
     "autoload": {
         "psr-4": {
