@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "pendalf89\\filemanager\\": ""
+            "douglasmk\\filemanager\\": ""
         }
     }
 }
