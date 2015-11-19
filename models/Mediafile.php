@@ -40,7 +40,7 @@ class Mediafile extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'filemanager_mediafile';
+		return Yii::$app->getModule('filemanager')->mediafile_table;
     }
 
     /**

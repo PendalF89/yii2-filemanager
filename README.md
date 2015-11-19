@@ -80,6 +80,9 @@ Configuration:
                 'size' => [500, 400],
             ],
         ],
+        // Database tables
+        'mediafile_table' => "filemanager_mediafile",
+        'owners_table' => "filemanager_owners",
     ],
 ],
 ```
