@@ -56,13 +56,15 @@ class Module extends \yii\base\Module
     private static $defaultThumbSize = [128, 128];
 
 
-    /**
+    	/**
 	 * Table aliases
 	 *
 	 * @var string
 	 */
+
 	public $mediafile_table = '{{%mediafile}}';
 	public $owners_table = '{{%owners}}';
+	public $vinculos_palavras_chaves_table = '{{%vinculos_palavras_chaves_table}}';
 
     public function init()
     {

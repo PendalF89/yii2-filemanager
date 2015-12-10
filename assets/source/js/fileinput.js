@@ -54,12 +54,12 @@ $(document).ready(function() {
         $(this).contents().find(".dashboard").on("click", "#insert-btn", function(e) {
             e.preventDefault();
 
-            var data = getFormData($(this).parents("#control-form"));
+            var data = ($('[role="filemanager-frame"]').contents().find('#arquivosSelecionados').val().split(','));
 
             input.trigger("fileInsert", [data]);
 
             if (imageContainer) {
-                imageContainer.html('<img src="' + data.url + '" alt="' + data.alt + '">');
+            //    imageContainer.html('<img src="' + data.url + '" alt="' + data.alt + '">');
             }
 
             input.val(data[pasteData]);

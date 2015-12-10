@@ -95,6 +95,13 @@ class FileInput extends InputWidget
     public $callbackBeforeInsert = '';
 
     /**
+     * @var string JavaScript function, which will be called before load page.
+     * Argument data contains file data.
+     * data example: [alt: "Witch with cat", description: "123", url: "/uploads/2014/12/vedma-100x100.jpeg", id: "45"]
+     */
+    public $callbackBeforeLoad = '';
+
+    /**
      * @var string This data will be inserted in input field
      */
     public $pasteData = self::DATA_URL;
@@ -103,12 +110,12 @@ class FileInput extends InputWidget
      * @var array widget html options
      */
     public $options = ['class' => 'form-control'];
-    
+
     /**
      *
      * @var array selecte the frameSrc in case you use a different module name
      */
-    public $frameSrc  = ['/filemanager/file/filemanager'];
+    public $frameSrc  = ['/filemanager/file/filemanager','modal'=>'true'];
 
     const DATA_ID = 'id';
     const DATA_URL = 'url';
@@ -154,11 +161,18 @@ class FileInput extends InputWidget
             );
         }
 
+        if (!empty($this->callbackBeforeLoad)) {
+            $this->view->registerJs('
+                $("#' . $this->options['id'] . '").on("formLoad", ' . $this->callbackBeforeLoad . ');
+                $("#' . $this->options['id'] . '").trigger("formLoad");'
+            );
+        }
+
         $modal = $this->renderFile('@vendor/douglasmk/yii2-filemanager/views/file/modal.php', [
             'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
             'frameId' => $this->options['id'] . '-frame',
-            'frameSrc' => Url::to($this->frameSrc), 
+            'frameSrc' => Url::to($this->frameSrc),
             'thumb' => $this->thumb,
             'imageContainer' => $this->imageContainer,
             'pasteData' => $this->pasteData,

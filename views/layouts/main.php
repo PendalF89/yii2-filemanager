@@ -1,10 +1,12 @@
 <?php
 use douglasmk\filemanager\assets\FilemanagerAsset;
 use yii\helpers\Html;
+use app\assets\AppAsset;
 
 /* @var $this yii\web\View */
 
 FilemanagerAsset::register($this);
+AppAsset::register($this); // Registra os Assets globais (web)
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
