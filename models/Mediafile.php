@@ -1,6 +1,6 @@
 <?php
 
-namespace pendalf89\filemanager\models;
+namespace douglasmk\filemanager\models;
 
 use Yii;
 use yii\web\UploadedFile;
@@ -10,8 +10,8 @@ use yii\imagine\Image;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
-use pendalf89\filemanager\Module;
-use pendalf89\filemanager\models\Owners;
+use douglasmk\filemanager\Module;
+use douglasmk\filemanager\models\Owners;
 use Imagine\Image\ImageInterface;
 
 /**
@@ -32,15 +32,20 @@ use Imagine\Image\ImageInterface;
 class Mediafile extends ActiveRecord
 {
     public $file;
+    public $palavras_chaves_arquivos;
+    //public $vinculosArquivosPalavrasChaves;
 
     public static $imageFileTypes = ['image/gif', 'image/jpeg', 'image/png'];
+    public static $videoFileTypes = ['video/webm', 'video/mp4', 'image/ogg'];
+    public static $docFileTypes = ['application/pdf'];
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'filemanager_mediafile';
+        //return 'filemanager_mediafile';
+		return Yii::$app->getModule('filemanager')->mediafile_table;
     }
 
     /**
@@ -64,7 +69,7 @@ class Mediafile extends ActiveRecord
     {
         return [
             'id' => Module::t('main', 'ID'),
-            'filename' => Module::t('main', 'filename'),
+            'filename' => Module::t('main', 'Filename'),
             'type' => Module::t('main', 'Type'),
             'url' => Module::t('main', 'Url'),
             'alt' => Module::t('main', 'Alt attribute'),
@@ -73,6 +78,7 @@ class Mediafile extends ActiveRecord
             'thumbs' => Module::t('main', 'Thumbnails'),
             'created_at' => Module::t('main', 'Created'),
             'updated_at' => Module::t('main', 'Updated'),
+            'palavras_chaves_arquivos' => Module::t('main', 'Keywords'),
         ];
     }
 
@@ -271,6 +277,22 @@ class Mediafile extends ActiveRecord
     }
 
     /**
+     * @return bool if type of this media file is video, return true;
+     */
+    public function isVideo()
+    {
+        return in_array($this->type, self::$videoFileTypes);
+    }
+
+    /**
+     * @return bool if type of this media file is video, return true;
+     */
+    public function isDocument()
+    {
+        return in_array($this->type, self::$docFileTypes);
+    }
+
+    /**
      * @param $baseUrl
      * @return string default thumbnail for image
      */
@@ -336,10 +358,32 @@ class Mediafile extends ActiveRecord
     public function getThumbImage($alias, $options=[])
     {
         $url = $this->getThumbUrl($alias);
+        $class = '';
 
-        if (empty($url)) {
-            return '';
+        if(!$this->isImage()){
+            if(strpos($this->type,'pdf')){
+                $class = ' fa fa-file-pdf-o';
+            }else if(strpos($this->type,'doc')){
+                $class = ' fa fa-file-word-o';
+            }else if(strpos($this->type,'xls')){
+                $class = ' fa fa-file-excel-o';
+            }else if(strpos($this->type,'ppt')){
+                $class = ' fa fa-file-powerpoint-o';
+            }else if(strpos($this->type,'txt')){
+                $class = ' fa fa-file-text-o';
+            }else if (empty($url)) {
+                $class = ' fa fa-file-o';
+            }
+
+            if(isset($options['class'])){
+                $options['class'] = $options['class'] . $class;
+            }else{
+                $options['class'] = $class;
+            }
+
+            return Html::tag('i','',$options);
         }
+
 
         if (empty($options['alt'])) {
             $options['alt'] = $this->alt;
@@ -375,10 +419,11 @@ class Mediafile extends ActiveRecord
         $basePath = Yii::getAlias($routes['basePath']);
 
         foreach ($this->getThumbs() as $thumbUrl) {
-            unlink("$basePath/$thumbUrl");
+            if(is_file("$basePath/$thumbUrl"))
+                unlink("$basePath/$thumbUrl");
         }
-
-        unlink("$basePath/{$this->getDefaultThumbUrl()}");
+        if(is_file("$basePath/{$this->getDefaultThumbUrl()}"))
+            unlink("$basePath/{$this->getDefaultThumbUrl()}");
     }
 
     /**
@@ -389,23 +434,37 @@ class Mediafile extends ActiveRecord
     public function deleteFile(array $routes)
     {
         $basePath = Yii::getAlias($routes['basePath']);
-        return unlink("$basePath/{$this->url}");
+
+        if(is_file("$basePath/{$this->url}"))
+            return unlink("$basePath/{$this->url}");
+        return true;
     }
 
     /**
      * Creates data provider instance with search query applied
      * @return ActiveDataProvider
      */
-    public function search()
+    /*public function search()
     {
         $query = self::find()->orderBy('created_at DESC');
+        $query->joinWith(['vinculosArquivosPalavrasChaves.palavraChave']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+
+
+
+        $dataProvider->sort->attributes['filename'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['filename' => SORT_ASC],
+            'desc' => ['filename' => SORT_DESC],
+        ];
+
         return $dataProvider;
-    }
+    }*/
 
     /**
      * @return int last changes timestamp
@@ -482,4 +541,15 @@ class Mediafile extends ActiveRecord
 
         return false;
     }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVinculosArquivosPalavrasChaves()
+    {
+        return $this->hasMany(VinculosArquivosPalavrasChaves::className(), ['vap_arquivo_id' => 'id']);
+    }
+
+
 }

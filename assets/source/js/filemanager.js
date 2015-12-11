@@ -1,4 +1,16 @@
 $(document).ready(function() {
+
+    if(inIframe()){
+        $('a').each(function(e,f){
+            var href = $(f).prop('href');
+            if(href.indexOf("?")>=0){
+                $(f).prop('href', href + "&modal=true");
+            }else{
+                $(f).prop('href', href + "?modal=true");
+            }
+        });
+    }
+
     var ajaxRequest = null,
         fileInfoContainer = $("#fileinfo"),
         strictThumb = $(window.frameElement).parents('[role="filemanager-modal"]').attr("data-thumb");
@@ -32,6 +44,14 @@ $(document).ready(function() {
             }
         });
     });
+
+
+    $(this).contents().find(".dashboard").on("click", "#insert-btn",
+        function(e) {
+            e.preventDefault();
+            $("#arquivosSelecionados").val($("#filemanagerGrid").yiiGridView("getSelectedRows"));
+        }
+    );
 
     fileInfoContainer.on("click", '[role="delete"]', function(e) {
         e.preventDefault();
@@ -78,3 +98,12 @@ $(document).ready(function() {
         });
     });
 });
+
+
+function inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}

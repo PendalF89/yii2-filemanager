@@ -1,6 +1,6 @@
 <?php
 
-namespace pendalf89\filemanager\models;
+namespace douglasmk\filemanager\models;
 
 use Yii;
 
@@ -21,7 +21,11 @@ class Owners extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'filemanager_owners';
+<<<<<<< HEAD
+=======
+        //return 'filemanager_owners';
+>>>>>>> 420d98c2a380c4d99b874b4b4e84abfa9e03ac97
+		return Yii::$app->getModule('filemanager')->owners_table;
     }
 
     /**

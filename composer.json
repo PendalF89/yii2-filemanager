@@ -1,12 +1,12 @@
 {
-    "name": "pendalf89/yii2-filemanager",
+    "name": "douglasmk/yii2-filemanager",
     "description": "Yii2 filemanager",
     "type": "yii2-extension",
     "license": "GNU GPLv2",
     "authors": [
         {
-            "name": "PendalF",
-            "email": "pendalf@mail.ru"
+            "name": "DouglasMK",
+            "email": "douglas@douglasmk.com.br"
         }
     ],
     "minimum-stability": "dev",
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "pendalf89\\filemanager\\": ""
+            "douglasmk\\filemanager\\": ""
         }
     }
 }

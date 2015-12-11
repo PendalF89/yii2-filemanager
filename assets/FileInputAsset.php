@@ -1,12 +1,12 @@
 <?php
 
-namespace pendalf89\filemanager\assets;
+namespace douglasmk\filemanager\assets;
 
 use yii\web\AssetBundle;
 
 class FileInputAsset extends AssetBundle
 {
-    public $sourcePath = '@vendor/pendalf89/yii2-filemanager/assets/source';
+    public $sourcePath = '@vendor/douglasmk/yii2-filemanager/assets/source';
 
     public $js = [
         'js/fileinput.js',
@@ -15,6 +15,6 @@ class FileInputAsset extends AssetBundle
     public $depends = [
         'yii\bootstrap\BootstrapAsset',
         'yii\web\JqueryAsset',
-        'pendalf89\filemanager\assets\ModalAsset',
+        'douglasmk\filemanager\assets\ModalAsset',
     ];
 }

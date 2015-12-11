@@ -66,9 +66,10 @@
     #DASHBOARD
 \*------------------------------------*/
 .dashboard {
-  width: 290px;
+  /*width: 290px;
   float: left;
-  padding-left: 10px;
+  padding-left: 10px;*/
+  padding-right: 10px;
 }
 .dashboard .loading {
   width: 298px;
