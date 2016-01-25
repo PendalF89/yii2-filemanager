@@ -301,7 +301,7 @@ class Mediafile extends ActiveRecord
         $extension = $originalFile['extension'];
         $width = $size[0];
         $height = $size[1];
-        return Yii::getAlias('@web')."$dirname/$filename-{$width}x{$height}.$extension";
+        return "$dirname/$filename-{$width}x{$height}.$extension";
     }
     /**
      * @return array thumbnails
