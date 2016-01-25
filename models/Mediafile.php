@@ -9,8 +9,10 @@ use yii\db\ActiveRecord;
 use yii\imagine\Image;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\helpers\Inflector;
 use pendalf89\filemanager\Module;
 use pendalf89\filemanager\models\Owners;
+use Imagine\Image\ImageInterface;
 
 /**
  * This is the model class for table "filemanager_mediafile".
@@ -132,22 +134,21 @@ class Mediafile extends ActiveRecord
 
         // get file instance
         $this->file = UploadedFile::getInstance($this, 'file');
-        
         //if a file with the same name already exist append a number
         $counter = 0;
         do{
             if($counter==0)
-                $filename = $this->file->name;
+                $filename = Inflector::slug($this->file->baseName).'.'. $this->file->extension;
             else{
                 //if we don't want to rename we finish the call here
                 if($rename == false)
                     return false;
-                $filename = $this->file->baseName. $counter.'.'. $this->file->extension;  
+                $filename = Inflector::slug($this->file->baseName). $counter.'.'. $this->file->extension;
             }
-            $url = "$structure/$filename"; 
+            $url = "$structure/$filename";
             $counter++;
-        }while(self::findByUrl($url)); // checks for existing url in db
-       
+        } while(self::findByUrl($url)); // checks for existing url in db
+
         // save original uploaded file
         $this->file->saveAs("$absolutePath/$filename");
         $this->filename = $filename;
@@ -179,10 +180,11 @@ class Mediafile extends ActiveRecord
         foreach ($presets as $alias => $preset) {
             $width = $preset['size'][0];
             $height = $preset['size'][1];
+            $mode = (isset($preset['mode']) ? $preset['mode'] : ImageInterface::THUMBNAIL_OUTBOUND);
 
             $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
 
-            Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
+            Image::thumbnail("$basePath/{$this->url}", $width, $height, $mode)->save("$basePath/$thumbUrl");
 
             $thumbs[$alias] = $thumbUrl;
         }
@@ -282,13 +284,25 @@ class Mediafile extends ActiveRecord
             $extension = $originalFile['extension'];
             $width = $size[0];
             $height = $size[1];
-
             return "$dirname/$filename-{$width}x{$height}.$extension";
         }
-
         return "$baseUrl/images/file.png";
     }
-
+    /**
+     * @param $baseUrl
+     * @return string default thumbnail for image
+     */
+    public function getDefaultUploadThumbUrl($baseUrl = '')
+    {
+        $size = Module::getDefaultThumbSize();
+        $originalFile = pathinfo($this->url);
+        $dirname = $originalFile['dirname'];
+        $filename = $originalFile['filename'];
+        $extension = $originalFile['extension'];
+        $width = $size[0];
+        $height = $size[1];
+        return Yii::getAlias('@web')."$dirname/$filename-{$width}x{$height}.$extension";
+    }
     /**
      * @return array thumbnails
      */
@@ -342,15 +356,13 @@ class Mediafile extends ActiveRecord
     {
         $thumbs = $this->getThumbs();
         $list = [];
+        $originalImageSize = $this->getOriginalImageSize($module->routes);
+        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
 
         foreach ($thumbs as $alias => $url) {
             $preset = $module->thumbs[$alias];
             $list[$url] = $preset['name'] . ' ' . $preset['size'][0] . ' × ' . $preset['size'][1];
         }
-
-        $originalImageSize = $this->getOriginalImageSize($module->routes);
-        $list[$this->url] = Module::t('main', 'Original') . ' ' . $originalImageSize;
-
         return $list;
     }
 
