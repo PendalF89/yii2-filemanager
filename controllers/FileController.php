@@ -81,7 +81,7 @@ class FileController extends Controller
 
         $response['files'][] = [
             'url'           => $model->url,
-            'thumbnailUrl'  => Yii::getAlias('@web').$model->getDefaultThumbUrl($bundle->baseUrl),
+            'thumbnailUrl'  => $model->getDefaultThumbUrl($bundle->baseUrl),
             'name'          => $model->filename,
             'type'          => $model->type,
             'size'          => $model->file->size,
