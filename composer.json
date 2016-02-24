@@ -6,9 +6,17 @@
     "authors": [
         {
             "name": "DouglasMK",
-            "email": "douglas@douglasmk.com.br"
+            "contact": "www.douglasmk.com.br"
         }
-    ],
+    ], 
+    
+	"repositories": [
+		{
+            "type": "composer",
+            "url": "http://localhost:4680"
+        }
+    ],   
+
     "minimum-stability": "dev",
     "prefer-stable" : true,
     "require": {
@@ -16,7 +24,9 @@
         "yiisoft/yii2-imagine": "*",
         "pendalf89/yii2-tinymce": "*",
         "kartik-v/yii2-widget-alert": "*",
-        "2amigos/yii2-file-upload-widget": "*"
+        "2amigos/yii2-file-upload-widget": "*",
+        "obsrepo/module-palavraschave": "dev-master",
+        "obsrepo/yii2-obsref": "dev-master"
     },
     "autoload": {
         "psr-4": {

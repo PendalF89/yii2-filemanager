@@ -65,6 +65,7 @@ class Module extends \yii\base\Module
 	public $mediafile_table = '{{%mediafile}}';
 	public $owners_table = '{{%owners}}';
 	public $vinculos_palavras_chaves_table = '{{%vinculos_palavras_chaves_table}}';
+	public $vinculos_referencias_table = '{{%vinculos_referencias_table}}';
 
     public function init()
     {
