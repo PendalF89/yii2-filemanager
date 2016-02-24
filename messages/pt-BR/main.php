@@ -36,4 +36,6 @@ return [
     'Actions' => 'Ações',
     'Filename' => 'Arquivo',
     'Keywords' => 'Palavras-chave',
+    'References' => 'Referências',
+    'Open in new window' => 'Abrir em nova janela',
 ];

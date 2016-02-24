@@ -33,6 +33,7 @@ class Mediafile extends ActiveRecord
 {
     public $file;
     public $palavras_chaves_arquivos;
+    public $var_referencia_id;
     //public $vinculosArquivosPalavrasChaves;
 
     public static $imageFileTypes = ['image/gif', 'image/jpeg', 'image/png'];
@@ -45,7 +46,7 @@ class Mediafile extends ActiveRecord
     public static function tableName()
     {
         //return 'filemanager_mediafile';
-		return Yii::$app->getModule('filemanager')->mediafile_table;
+		return Yii::$app->getModule('arquivos')->mediafile_table;
     }
 
     /**
@@ -79,6 +80,7 @@ class Mediafile extends ActiveRecord
             'created_at' => Module::t('main', 'Created'),
             'updated_at' => Module::t('main', 'Updated'),
             'palavras_chaves_arquivos' => Module::t('main', 'Keywords'),
+            'var_referencia_id' => Module::t('main', 'References'),
         ];
     }
 
@@ -549,6 +551,56 @@ class Mediafile extends ActiveRecord
     public function getVinculosArquivosPalavrasChaves()
     {
         return $this->hasMany(VinculosArquivosPalavrasChaves::className(), ['vap_arquivo_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVinculosArquivosReferencias()
+    {
+        return $this->hasMany(VinculosArquivosReferencias::className(), ['var_arquivo_id' => 'id']);
+    }
+    
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPalavrasChavesArquivos($separador = ';<br>')
+    {
+        $vinculosPalavrasChaves = VinculosArquivosPalavrasChaves::find()
+                                    ->with('palavraChave')
+                                    ->where( ['vap_arquivo_id'=> $this->id] )
+                                    ->asArray()
+                                    ->all();
+        $palavrasChaves_final = null;
+
+        if ( !empty($vinculosPalavrasChaves) ) {
+
+            foreach ($vinculosPalavrasChaves as $vinculos) {
+                $palavrasChaves_final .= $vinculos['palavraChave']['pch_palavra_chave'] . $separador;
+            }
+        }
+
+        return $palavrasChaves_final;
+    }
+    
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReferenciasArquivos()
+    {
+        $referencias_final = '';
+        
+        foreach ($this->vinculosArquivosReferencias as $vinculos) {
+            
+            $modelReferencia = $vinculos->referencias;
+            
+            $referencias_final .= $modelReferencia->exibeReferencia();
+        }
+        
+
+        return $referencias_final;
     }
 
 

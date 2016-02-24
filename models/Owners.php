@@ -21,11 +21,7 @@ class Owners extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-<<<<<<< HEAD
-=======
-        //return 'filemanager_owners';
->>>>>>> 420d98c2a380c4d99b874b4b4e84abfa9e03ac97
-		return Yii::$app->getModule('filemanager')->owners_table;
+		return Yii::$app->getModule('arquivos')->owners_table;
     }
 
     /**

@@ -24,7 +24,7 @@ class VinculosArquivosPalavrasChaves extends \yii\db\ActiveRecord
     public static function tableName()
     {
         //return 'filemanager_mediafile';
-		return Yii::$app->getModule('filemanager')->vinculos_palavras_chaves_table;
+		return Yii::$app->getModule('arquivos')->vinculos_palavras_chaves_table;
     }
 
 
