@@ -20,11 +20,11 @@ $assetPath = FilemanagerAsset::register($this)->baseUrl;
 
             <div class="text-center">
                 <h2>
-                    <?= Html::a(Module::t('main', 'Files'), ['file/index']) ?>
+                    <?= Html::a(Module::t('main', 'Files'), ['arquivo/index']) ?>
                 </h2>
                 <?= Html::a(
                     Html::img($assetPath . '/images/files.png', ['alt' => 'Files'])
-                    , ['file/index']
+                    , ['arquivo/gerenciar']
                 ) ?>
             </div>
         </div>

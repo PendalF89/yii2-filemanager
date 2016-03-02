@@ -14,7 +14,7 @@ $this->params['moduleBundle'] = FilemanagerAsset::register($this);
 
 
 $this->title = Module::t('main', 'Files');
-$this->params['breadcrumbs'][] = ['label' => Module::t('main', 'File manager'), 'url' => ['/filemanager\/']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('main', 'File manager'), 'url' => ['/arquivos\/']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
