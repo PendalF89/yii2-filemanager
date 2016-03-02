@@ -119,7 +119,7 @@ class ArquivoController extends Controller
             if (!empty($_POST['Mediafile']['palavras_chaves_arquivos'])) {
                 $this->salvaVinculosPalavrasChaves($_POST['Mediafile']['palavras_chaves_arquivos'], $model->id);
             }
-            
+
             // salva as referencias, se foram enviadas
             if (!empty($_POST['RefReferencias']['ref_id'])) {
                 $this->salvaVinculosReferencias($_POST['RefReferencias']['ref_id'], $model->id);
@@ -323,26 +323,26 @@ class ArquivoController extends Controller
                 }
         }
     }
-    
-    
+
+
 
     /*
     * Salva os vínculos das palavras chaves
     */
     public function salvaVinculosReferencias($referencias, $idFicha) {
-        
+
         // percorre os vinculos das referencias que foram removidas
         $vinculosParaRemover = VinculosArquivosReferencias::find()->where([
                     'var_arquivo_id' => $idFicha
                 ])->where(['not in','var_referencia_id', $referencias])->all();
-                
-        if(isset($vinculosParaRemover)){        
+
+        if(isset($vinculosParaRemover)){
             foreach ($vinculosParaRemover as $remover ) {
                 $remover->delete();
             }
         }
-        
-        foreach ($referencias as $idReferencia ) {            
+
+        foreach ($referencias as $idReferencia ) {
 
             // verifica se já existe o vínculo entre o ID da Imagem e o ID da Referência para nao duplicar
                 $buscaIdFichaEIdReferencia = VinculosArquivosReferencias::find()->where([

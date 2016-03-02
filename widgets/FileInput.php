@@ -115,7 +115,7 @@ class FileInput extends InputWidget
      *
      * @var array selecte the frameSrc in case you use a different module name
      */
-    public $frameSrc  = ['/filemanager/file/filemanager','modal'=>'true'];
+    public $frameSrc  = ['/arquivos/arquivo/gerenciar','modal'=>'true'];
 
     const DATA_ID = 'id';
     const DATA_URL = 'url';
@@ -168,7 +168,7 @@ class FileInput extends InputWidget
             );
         }
 
-        $modal = $this->renderFile('@vendor/douglasmk/yii2-filemanager/views/file/modal.php', [
+        $modal = $this->renderFile('@vendor/douglasmk/yii2-filemanager/views/arquivo/modal.php', [
             'inputId' => $this->options['id'],
             'btnId' => $this->buttonOptions['id'],
             'frameId' => $this->options['id'] . '-frame',
