@@ -4,6 +4,7 @@ use dosamigos\fileupload\FileUploadUI;
 use douglasmk\filemanager\Module;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
+use yii\bootstrap\Alert;
 
 /* @var $this yii\web\View */
 /* @var $searchModel douglasmk\filemanager\models\Mediafile */
@@ -20,6 +21,13 @@ use yii\bootstrap\Modal;
 
         <div id="uploadmanager">
 
+            <?= Alert::widget([
+                'options'   => ['class' => 'alert-danger text-center hide fade in dimiss'],
+                'body'      => Yii::$app->session->getFlash('error')
+            ]);
+            ?>
+
+
             <?= FileUploadUI::widget([
                 'model' => $model,
                 'attribute' => 'file',
@@ -29,22 +37,29 @@ use yii\bootstrap\Modal;
                 ],
                 'clientOptions' => [
                     'maxNumberOfFiles'=> 1,
-                    'autoUpload'=> Yii::$app->getModule('filemanager')->autoUpload,
+                    'autoUpload'=> Yii::$app->getModule('arquivos')->autoUpload,
                     'maxFileSize' => 96000000
                 ],
 
                 'clientEvents' => [
                     'fileuploaddone' => 'function(e, data) {
-                        window.location.href = data.result.files[0].updateUrl;
+                        $(".alert-danger").html("").addClass("hide");
+                        console.log(data.result);
+                        if(!!data.result.error){
+                            $(".alert-danger").html(data.result.error).removeClass("hide");
+                        }else{
+                            $("#loading").show();
+                            window.location.href = data.result.files[0].updateUrl;
+                        }
                     }',
                 ],
-                'url' => ['upload'],
+                'url' => ['upload','modal' => Yii::$app->request->get('modal')],
                 'gallery' => false,
             ]) ?>
 
         </div>
     </div>
     <div class="panel-footer">
-        <?= Html::a('<i class="fa fa-arrow-left"></i> ' . Module::t('main', 'Back to file manager'), ['file/filemanager'],['class'=>'btn btn-primary']); ?>
+        <?= Html::a('<i class="fa fa-arrow-left"></i> ' . Module::t('main', 'Back to file manager'), ['/arquivos/arquivo/gerenciar'],['class'=>'btn btn-primary']); ?>
     </div>
 </div>

@@ -20,6 +20,7 @@ use obsrepo\modules\palavraschave\models\PalavrasChave;
 class ArquivoController extends Controller
 {
     public $enableCsrfValidation = false;
+    private $modal = 'false';
 
     public function behaviors()
     {
@@ -42,8 +43,11 @@ class ArquivoController extends Controller
         }
 
         if(Yii::$app->request->get('modal')=='true'){
+            $this->modal = 'true';
             $this->layout = '@vendor/douglasmk/yii2-filemanager/views/layouts/main';
         }
+
+
 
         return parent::beforeAction($action);
     }
@@ -81,7 +85,14 @@ class ArquivoController extends Controller
         $model = new Mediafile();
         $routes = $this->module->routes;
         $rename = $this->module->rename;
-        $model->saveUploadedFile($routes, $rename);
+
+        //$model->saveUploadedFile($routes, $rename);
+
+
+        if(!$model->saveUploadedFile($routes, $rename)){
+            $response['error'] = 'Falha ao fazer upload do arquivo. Verifique se o mesmo já não está cadastrado!';
+        }
+
         $bundle = FilemanagerAsset::register($this->view);
 
         if ($model->isImage()) {
@@ -94,9 +105,9 @@ class ArquivoController extends Controller
             'name'          => $model->filename,
             'type'          => $model->type,
             'size'          => $model->file->size,
-            'deleteUrl'     => Url::to(['arquivo/delete', 'id' => $model->id]),
+            'deleteUrl'     => Url::to(['arquivo/delete', 'id' => $model->id, 'modal' => $this->modal]),
             'deleteType'    => 'POST',
-            'updateUrl'     => Url::to(['arquivo/update', 'id' => $model->id]),
+            'updateUrl'     => Url::to(['arquivo/update', 'id' => $model->id, 'modal' => $this->modal]),
         ];
 
         return $response;
@@ -156,6 +167,18 @@ class ArquivoController extends Controller
 
         $model = Mediafile::findOne($id);
 
+        if($model->vinculosArquivosPalavrasChaves){
+            foreach ($model->vinculosArquivosPalavrasChaves as $vincPalavrasChaves) {
+                $vincPalavrasChaves->delete();
+            }
+        }
+
+        if($model->vinculosArquivosReferencias){
+            foreach ($model->vinculosArquivosReferencias as $vincArquivosReferencias) {
+                $vincArquivosReferencias->delete();
+            }
+        }
+
         if($model->delete()){
 
             if ($model->isImage()) {
@@ -165,7 +188,7 @@ class ArquivoController extends Controller
             $model->deleteFile($routes);
         }
 
-        $this->redirect(Url::to(['file/filemanager']));
+        $this->redirect(Url::to(['arquivo/gerenciar', 'modal' => $this->modal]));
 
         //return ['success' => 'true'];
     }
@@ -208,15 +231,18 @@ class ArquivoController extends Controller
      */
     public function actionGetFiles($ids)
     {
+        \Yii::$app->response->format = 'json';
         $ids = explode(',', $ids);
         $models = [];
-        foreach ($ids as $i=>$id) {
-            $mediafile = Mediafile::findOne($id);
+        $mediafiles = Mediafile::findAll($ids);
+
+        foreach ($mediafiles as $i=>$mediafile) {
+            
             $models[$i] = isset($mediafile) ? $mediafile->attributes : $mediafile;
             if(is_array($models[$i]))
                 $models[$i]['icone'] = $mediafile->getThumbImage('small',['style' => 'font-size: 40px']);
         }
-        echo json_encode($models);
+        return ($models);
     }
 
 

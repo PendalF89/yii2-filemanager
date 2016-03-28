@@ -73,7 +73,7 @@ class Mediafile extends ActiveRecord
             'filename' => Module::t('main', 'Filename'),
             'type' => Module::t('main', 'Type'),
             'url' => Module::t('main', 'Url'),
-            'alt' => Module::t('main', 'Alt attribute'),
+            'alt' => Module::t('main', 'Title'),
             'size' => Module::t('main', 'Size'),
             'description' => Module::t('main', 'Description'),
             'thumbs' => Module::t('main', 'Thumbnails'),
@@ -142,6 +142,7 @@ class Mediafile extends ActiveRecord
 
         // get file instance
         $this->file = UploadedFile::getInstance($this, 'file');
+        //die(var_dump($this));
         //if a file with the same name already exist append a number
         $counter = 0;
         do{
@@ -560,8 +561,8 @@ class Mediafile extends ActiveRecord
     {
         return $this->hasMany(VinculosArquivosReferencias::className(), ['var_arquivo_id' => 'id']);
     }
-    
-    
+
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -583,22 +584,22 @@ class Mediafile extends ActiveRecord
 
         return $palavrasChaves_final;
     }
-    
-    
+
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getReferenciasArquivos()
     {
         $referencias_final = '';
-        
+
         foreach ($this->vinculosArquivosReferencias as $vinculos) {
-            
+
             $modelReferencia = $vinculos->referencias;
-            
+
             $referencias_final .= $modelReferencia->exibeReferencia();
         }
-        
+
 
         return $referencias_final;
     }

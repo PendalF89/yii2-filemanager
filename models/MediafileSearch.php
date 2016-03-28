@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
  *
  * @property integer $id
  * @property string $filename
+ * @property string $alt
  * @property string $palavras_chaves_arquivos
  */
 
@@ -17,6 +18,7 @@ class MediafileSearch extends Mediafile
 {
     public $id;
     public $filename;
+    public $alt;
     public $palavras_chaves_arquivos;
     public $preview;
 
@@ -28,8 +30,8 @@ class MediafileSearch extends Mediafile
     {
         return [
             [['id'], 'integer'],
-            [['filename','palavras_chaves_arquivos','preview'], 'string'],
-            [['id','filename'], 'safe']
+            [['filename','alt','palavras_chaves_arquivos','preview'], 'string'],
+            [['id','alt','filename'], 'safe']
         ];
     }
 
@@ -57,12 +59,18 @@ class MediafileSearch extends Mediafile
 
         $query->andFilterWhere(['id' => $this->id]);
         $query->andFilterWhere(['like','filename', $this->filename]);
+        $query->andFilterWhere(['like','alt', $this->alt]);
         $query->andFilterWhere(['like','pch_palavra_chave', $this->palavras_chaves_arquivos]);
         $query->andFilterWhere(['like','filename', $this->preview]);
 
         $dataProvider->sort->attributes['id'] = [
             'asc' => ['id' => SORT_ASC],
             'desc' => ['id' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['alt'] = [
+            'asc' => ['alt' => SORT_ASC],
+            'desc' => ['alt' => SORT_DESC],
         ];
 
         $dataProvider->sort->attributes['filename'] = [

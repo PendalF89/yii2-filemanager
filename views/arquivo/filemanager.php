@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="dashboard">
-    <div id="filemanager" data-url-info="<?= Url::to(['file/info']) ?>">
+    <div id="filemanager" data-url-info="<?= Url::to(['arquivo/info']) ?>">
         <input type="hidden" id="arquivosSelecionados">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'id',
-                    'options' => ['width' => '10%'],
+                    'options' => ['width' => '7%'],
                 ],
                 [
                     'attribute' => 'filename',
@@ -82,6 +82,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $data->getThumbImage('small',['style' => 'font-size: 40px']) . '<br>' . $data->filename;
                         }
                     }
+                ],
+                [
+                    'attribute' => 'alt',
+                    'options' => ['width' => '20%'],
                 ],
                 [
                     'attribute' => 'palavras_chaves_arquivos',

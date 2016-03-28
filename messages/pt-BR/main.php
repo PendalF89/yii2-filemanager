@@ -38,4 +38,5 @@ return [
     'Keywords' => 'Palavras-chave',
     'References' => 'Referências',
     'Open in new window' => 'Abrir em nova janela',
+    'Use selected' => 'Utilizar arquivos selecionados',
 ];

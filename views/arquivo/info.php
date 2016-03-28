@@ -20,7 +20,7 @@ $bundle = FilemanagerAsset::register($this);
 
 <?php $form = ActiveForm::begin([
     //'action' => ['file/update', 'id' => $model->id],
-    'action' => array_merge(['file/update'], Yii::$app->request->get()),
+    'action' => array_merge(['arquivo/update'], Yii::$app->request->get()),
     'options' => ['id' => 'control-form'],
 ]); ?>
 
@@ -69,9 +69,7 @@ $bundle = FilemanagerAsset::register($this);
                         ],
                     ]); ?>
 
-                    <?php if ($model->isImage()) : ?>
-                        <?= $form->field($model, 'alt')->textInput(['class' => 'form-control input-sm']); ?>
-                    <?php endif; ?>
+                    <?= $form->field($model, 'alt')->textInput(['class' => 'form-control input-sm']); ?>
 
                     <?= $form->field($model, 'description')->textarea(['class' => 'form-control input-sm']); ?>
 
@@ -93,10 +91,10 @@ $bundle = FilemanagerAsset::register($this);
                     <?php #Html::button(Module::t('main', 'Insert'), ['id' => 'insert-btn', 'class' => 'btn btn-primary btn-sm']) ?>
 
 
-                        
-                        
-                        
-                    <?php 
+
+
+
+                    <?php
                         $ref = new Obsref();
                         echo $ref->campoReferencia($form,$model->vinculosArquivosReferencias,'var_referencia_id',$this);
                      ?>
@@ -141,9 +139,9 @@ $bundle = FilemanagerAsset::register($this);
         <div class="panel-footer">
             <?= Html::submitButton(Module::t('main', 'Save'), ['class' => 'btn btn-success']) ?>
 
-            <?= Html::a(Module::t('main', 'Cancel'), ['file/filemanager'],['class'=>'btn btn-warning']) ?>
+            <?= Html::a(Module::t('main', 'Cancel'), ['arquivo/gerenciar'],['class'=>'btn btn-warning']) ?>
 
-            <?= Html::a(Module::t('main', 'Delete'), ['file/delete/', 'id' => $model->id],
+            <?= Html::a(Module::t('main', 'Delete'), ['arquivo/delete/', 'id' => $model->id],
                 [
                     'class' => 'btn btn-danger',
                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
@@ -152,12 +150,12 @@ $bundle = FilemanagerAsset::register($this);
                 ]
             ) ?>
 
-            <?= Html::a(Module::t('main', 'Back to file manager'), ['file/filemanager'],['class'=>'pull-right btn btn-primary']) ?>
+            <?= Html::a(Module::t('main', 'Back to file manager'), ['/arquivos/arquivo/gerenciar'],['class'=>'pull-right btn btn-primary']) ?>
         </div>
 
     </div>
 
-<?php 
-ActiveForm::end(); 
+<?php
+ActiveForm::end();
 echo $ref->modalReferencia();
 ?>

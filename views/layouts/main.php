@@ -24,6 +24,22 @@ AppAsset::register($this); // Registra os Assets globais (web)
         <?= $content ?>
 
     <?php $this->endBody() ?>
+
+	<div id="loading" class="la-animate">
+		<!--la-animate-->
+		<div id="imgLoader">
+		</div>
+	</div>
+    <script>
+    $(window).load(function() {
+		// Animate loader off screen
+		$("#loading").hide();
+	});
+    $('a').on('click', function(){
+        $("#loading").show();
+    });
+    </script>
+
     </body>
     </html>
 <?php $this->endPage() ?>
