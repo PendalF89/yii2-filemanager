@@ -74,6 +74,6 @@ class MediafileBehavior extends Behavior
      */
     private function loadModel($id)
     {
-        return Mediafile::findOne($id);
+        return Mediafile::findOne(["url" => $id]);
     }
 }
