@@ -143,8 +143,8 @@ echo FileInput::widget([
     'thumb' => 'original',
     // Optional, if set, in container will be inserted selected image
     'imageContainer' => '.img',
-    // Default to FileInput::DATA_URL. This data will be inserted in input field
-    'pasteData' => FileInput::DATA_URL,
+    // Default to FileInput::DATA_IDL. This data will be inserted in input field
+    'pasteData' => FileInput::DATA_ID,
     // JavaScript function, which will be called before insert file data to input.
     // Argument data contains file data.
     // data example: [alt: "Ведьма с кошкой", description: "123", url: "/uploads/2014/12/vedma-100x100.jpeg", id: "45"]
