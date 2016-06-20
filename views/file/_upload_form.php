@@ -50,31 +50,6 @@ $context = $this->context;
             <div class="progress-extended">&nbsp;</div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <?= \kartik\select2\Select2::widget([
-                'id' => 'filemanager-tagIds',
-                'name' => 'tagIds',
-                'maintainOrder' => true,
-                'data' => ArrayHelper::map(Tag::find()->all(), 'id', 'name'),
-                'options' => ['multiple' => true],
-                'pluginOptions' => [
-                    'tags' => true,
-                    'maximumInputLength' => 10,
-                    // нельзя создавать теги с числовым именем
-                    'createTag' => new \yii\web\JsExpression("function (params) {
-                    if (/^\d+$/.test(params.term)) {
-                        return null;
-                    }
-                    return {
-                      id: params.term,
-                      text: params.term
-                    };
-                }"),
-                ],
-            ]) ?>
-        </div>
-    </div>
     <!-- The table listing the files available for upload/download -->
     <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
 <?= Html::endTag('div');?>
