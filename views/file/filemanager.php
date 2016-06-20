@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ListView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel pendalf89\filemanager\models\MediafileSearch */
@@ -18,30 +19,10 @@ $this->params['moduleBundle'] = FilemanagerAsset::register($this);
 
 <div id="filemanager" data-url-info="<?= Url::to(['file/info']) ?>">
 
-    <?php $form = \yii\bootstrap\ActiveForm::begin([
-        'action' => '?',
-        'method' => 'get',
-    ]); ?>
-        <div class="row">
-
-            <div class="col-xs-6 col-md-4">
-                <?= $form->field($model, 'tagIds')->widget(\kartik\select2\Select2::className(), [
-                    'maintainOrder' => true,
-                    'data' => ArrayHelper::map(Tag::find()->all(), 'id', 'name'),
-                    'options' => ['multiple' => true],
-                ])->label(false); ?>
-            </div>
-
-            <div class="col-xs-6 col-md-4">
-                <?= Html::submitButton(Yii::t('app', 'btn_search'), ['class' => 'btn btn-primary']) ?>
-            </div>
-
-        </div>
-    <?php \yii\bootstrap\ActiveForm::end(); ?>
-
+	<?php $searchForm = $this->render('_search_form', ['model' => $model]) ?>
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'layout' => '<div class="items">{items}</div>{pager}',
+        'layout' => $searchForm . '<div class="items">{items}</div>{pager}',
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
                     return Html::a(
