@@ -194,6 +194,18 @@ class Mediafile extends ActiveRecord
         }
     }
 
+	public function afterDelete()
+	{
+		parent::afterDelete();
+		Tag::removeUnusedTags();
+	}
+
+	public function afterSave($insert, $changedAttributes)
+	{
+		parent::afterSave($insert, $changedAttributes);
+		Tag::removeUnusedTags();
+	}
+
     /**
      * Save just uploaded file
      * @param array $routes routes from module settings
