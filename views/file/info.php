@@ -26,7 +26,7 @@ $bundle = FilemanagerAsset::register($this);
     <li><?= Html::a(Module::t('main', 'Delete'), ['file/delete/', 'id' => $model->id],
             [
                 'class' => 'text-danger',
-                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                'data-message' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                 'data-id' => $model->id,
                 'role' => 'delete',
             ]
