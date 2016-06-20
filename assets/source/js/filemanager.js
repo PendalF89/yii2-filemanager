@@ -38,7 +38,7 @@ $(document).ready(function() {
 
         var url = $(this).attr("href"),
             id = $(this).attr("data-id"),
-            confirmMessage = $(this).attr("data-confirm");
+            confirmMessage = $(this).attr("data-message");
 
         $.ajax({
             type: "POST",
