@@ -73,9 +73,11 @@ class FileController extends Controller
         $model = new Mediafile();
         $routes = $this->module->routes;
         $rename = $this->module->rename;
-        if ($tagIds = explode(',', Yii::$app->request->post('tagIds'))) {
-            $model->setTagIds($tagIds);
-        }
+	    $tagIds = Yii::$app->request->post('tagIds');
+
+	    if ($tagIds !== 'undefined') {
+		    $model->setTagIds(explode(',', $tagIds));
+	    }
 
         $model->saveUploadedFile($routes, $rename);
         $bundle = FilemanagerAsset::register($this->view);
