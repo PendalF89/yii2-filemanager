@@ -2,6 +2,7 @@
 
 namespace pendalf89\filemanager\controllers;
 
+use pendalf89\filemanager\models\MediafileSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -45,8 +46,8 @@ class FileController extends Controller
     public function actionFilemanager()
     {
         $this->layout = '@vendor/pendalf89/yii2-filemanager/views/layouts/main';
-        $model = new Mediafile();
-        $dataProvider = $model->search();
+        $model = new MediafileSearch();
+        $dataProvider = $model->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->defaultPageSize = 15;
 
         return $this->render('filemanager', [
@@ -72,6 +73,10 @@ class FileController extends Controller
         $model = new Mediafile();
         $routes = $this->module->routes;
         $rename = $this->module->rename;
+        if ($tagIds = explode(',', Yii::$app->request->post('tagIds'))) {
+            $model->setTagIds($tagIds);
+        }
+
         $model->saveUploadedFile($routes, $rename);
         $bundle = FilemanagerAsset::register($this->view);
 
@@ -108,7 +113,8 @@ class FileController extends Controller
 
         Yii::$app->session->setFlash('mediafileUpdateResult', $message);
 
-        return $this->renderPartial('info', [
+        Yii::$app->assetManager->bundles = false;
+        return $this->renderAjax('info', [
             'model' => $model,
             'strictThumb' => null,
         ]);
@@ -163,7 +169,8 @@ class FileController extends Controller
     public function actionInfo($id, $strictThumb = null)
     {
         $model = Mediafile::findOne($id);
-        return $this->renderPartial('info', [
+        Yii::$app->assetManager->bundles = false;
+        return $this->renderAjax('info', [
             'model' => $model,
             'strictThumb' => $strictThumb,
         ]);

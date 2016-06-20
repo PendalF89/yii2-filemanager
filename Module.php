@@ -10,13 +10,13 @@ class Module extends \yii\base\Module
 
     /**
      *  Set true if you want to rename files if the name is already in use 
-     * @var bolean 
+     * @var boolean
      */
     public $rename = false;
     
      /**
      *  Set true to enable autoupload
-     * @var bolean 
+     * @var boolean
      */
     public $autoUpload = false;
     
