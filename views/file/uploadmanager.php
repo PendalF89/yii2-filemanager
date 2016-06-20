@@ -18,7 +18,11 @@ use yii\helpers\Html;
         'clientOptions' => [
             'autoUpload'=> Yii::$app->getModule('filemanager')->autoUpload,
         ],
+        'clientEvents' => [
+            'fileuploadsubmit' => "function (e, data) { data.formData = [{name: 'tagIds', value: $('#filemanager-tagIds').val()}]; }",
+        ],
         'url' => ['upload'],
         'gallery' => false,
+        'formView' => '/file/_upload_form',
     ]) ?>
 </div>

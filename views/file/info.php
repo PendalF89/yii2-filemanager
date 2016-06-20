@@ -2,8 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 use pendalf89\filemanager\assets\FilemanagerAsset;
 use pendalf89\filemanager\Module;
+use pendalf89\filemanager\models\Tag;
 
 /* @var $this yii\web\View */
 /* @var $model pendalf89\filemanager\models\Mediafile */
@@ -35,8 +37,28 @@ $bundle = FilemanagerAsset::register($this);
 
 <?php $form = ActiveForm::begin([
     'action' => ['file/update', 'id' => $model->id],
+    'enableClientValidation' => false,
     'options' => ['id' => 'control-form'],
 ]); ?>
+
+    <?= $form->field($model, 'tagIds')->widget(\kartik\select2\Select2::className(), [
+        'id' => 'update-image-tag',
+        'maintainOrder' => true,
+        'data' => ArrayHelper::map(Tag::find()->all(), 'id', 'name'),
+        'options' => ['multiple' => true],
+        'pluginOptions' => [
+            'tags' => true,
+            'maximumInputLength' => 10,
+            // нельзя создавать теги с числовым именем
+            'createTag' => new \yii\web\JsExpression("function (params) {
+                if (/^\d+$/.test(params.term)) {
+                    return null;
+                }
+                return {id: params.term, text: params.term};
+            }"),
+        ],
+    ]) ?>
+
     <?php if ($model->isImage()) : ?>
         <?= $form->field($model, 'alt')->textInput(['class' => 'form-control input-sm']); ?>
     <?php endif; ?>
