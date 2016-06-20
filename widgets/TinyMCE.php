@@ -61,6 +61,7 @@ class TinyMce extends InputWidget
             'name' => $this->name,
             'model' => $this->model,
             'attribute' => $this->attribute,
+            'value' => $this->value,
             'clientOptions' => $this->clientOptions,
             'options' => $this->options,
         ]);
