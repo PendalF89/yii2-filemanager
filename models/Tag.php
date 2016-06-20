@@ -62,4 +62,22 @@ class Tag extends ActiveRecord
         return $this->hasMany(Mediafile::className(), ['id' => 'mediafile_id'])
             ->viaTable('filemanager_mediafile_tag', ['tag_id' => 'id']);
     }
+
+	/**
+	 * Removes unused tags
+	 *
+	 * @return int
+	 * @throws \yii\db\Exception
+	 */
+	public static function removeUnusedTags()
+	{
+		return Yii::$app->db->createCommand(
+			'DELETE filemanager_tag
+			FROM
+				filemanager_tag
+			LEFT JOIN filemanager_mediafile_tag ON id = tag_id
+			WHERE
+				ISNULL(mediafile_id)'
+		)->execute();
+	}
 }
