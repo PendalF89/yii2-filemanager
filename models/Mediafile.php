@@ -401,7 +401,7 @@ class Mediafile extends ActiveRecord
      */
     public function getThumbs()
     {
-        return unserialize($this->thumbs);
+        return unserialize($this->thumbs) ?: [];
     }
 
     /**
@@ -468,10 +468,15 @@ class Mediafile extends ActiveRecord
         $basePath = Yii::getAlias($routes['basePath']);
 
         foreach ($this->getThumbs() as $thumbUrl) {
-            unlink("$basePath/$thumbUrl");
+            if(file_exists("$basePath/$thumbUrl")) {
+            	unlink("$basePath/$thumbUrl");
+            }
         }
-
-        unlink("$basePath/{$this->getDefaultThumbUrl()}");
+        
+        $defaultThumbPath = "$basePath/{$this->getDefaultThumbUrl()}";
+        if(file_exists($defaultThumbPath)) {
+            unlink($defaultThumbPath);
+        }
     }
 
     /**
@@ -482,7 +487,8 @@ class Mediafile extends ActiveRecord
     public function deleteFile(array $routes)
     {
         $basePath = Yii::getAlias($routes['basePath']);
-        return unlink("$basePath/{$this->url}");
+        $filePath = "$basePath/{$this->url}";
+        return file_exists($filePath) ? unlink($filePath) : false;
     }
 
     /**
