@@ -275,7 +275,7 @@ class Mediafile extends ActiveRecord
             $height = $preset['size'][1];
             $mode = (isset($preset['mode']) ? $preset['mode'] : ImageInterface::THUMBNAIL_OUTBOUND);
 
-            $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
+            $thumbUrl = "$dirname/" . $this->getThumbFilename($filename, $extension, $alias, $width, $height);
 
             Image::thumbnail("$basePath/{$this->url}", $width, $height, $mode)->save("$basePath/$thumbUrl");
 
@@ -308,7 +308,7 @@ class Mediafile extends ActiveRecord
         $size = Module::getDefaultThumbSize();
         $width = $size[0];
         $height = $size[1];
-        $thumbUrl = "$dirname/$filename-{$width}x{$height}.$extension";
+        $thumbUrl = "$dirname/" . $this->getThumbFilename($filename, $extension, Module::DEFAULT_THUMB_ALIAS, $width, $height);
         $basePath = Yii::getAlias($routes['basePath']);
         Image::thumbnail("$basePath/{$this->url}", $width, $height)->save("$basePath/$thumbUrl");
     }
@@ -377,10 +377,12 @@ class Mediafile extends ActiveRecord
             $extension = $originalFile['extension'];
             $width = $size[0];
             $height = $size[1];
-            return "$dirname/$filename-{$width}x{$height}.$extension";
+
+            return "$dirname/" . $this->getThumbFilename($filename, $extension, Module::DEFAULT_THUMB_ALIAS, $width, $height);
         }
         return "$baseUrl/images/file.png";
     }
+
     /**
      * @param $baseUrl
      * @return string default thumbnail for image
@@ -394,8 +396,35 @@ class Mediafile extends ActiveRecord
         $extension = $originalFile['extension'];
         $width = $size[0];
         $height = $size[1];
-        return "$dirname/$filename-{$width}x{$height}.$extension";
+
+        return "$dirname/" . $this->getThumbFilename($filename, $extension, Module::DEFAULT_THUMB_ALIAS, $width, $height);
     }
+
+	/**
+	 * Returns thumbnail name
+	 *
+	 * @param $original
+	 * @param $extension
+	 * @param $alias
+	 * @param $width
+	 * @param $height
+	 *
+	 * @return string
+	 */
+	protected function getThumbFilename($original, $extension, $alias, $width, $height)
+	{
+		/** @var Module $module */
+		$module = Module::getInstance();
+
+		return strtr($module->thumbFilenameTemplate, [
+			'{width}'     => $width,
+			'{height}'    => $height,
+			'{alias}'     => $alias,
+			'{original}'  => $original,
+			'{extension}' => $extension,
+		]);
+	}
+
     /**
      * @return array thumbnails
      */
