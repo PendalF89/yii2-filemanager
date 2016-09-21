@@ -6,6 +6,8 @@ use Yii;
 
 class Module extends \yii\base\Module
 {
+	const DEFAULT_THUMB_ALIAS = 'fm';
+
     public $controllerNamespace = 'pendalf89\filemanager\controllers';
 
     /**
@@ -19,6 +21,14 @@ class Module extends \yii\base\Module
      * @var boolean
      */
     public $autoUpload = false;
+
+	/**
+	 * Thumbnails name template.
+	 * Possible vars: {original}, {width}, {height}, {alias}, {extension}
+	 * Note: "fm" alias is reserved for default thumbnails
+	 * @var string
+	 */
+	public $thumbFilenameTemplate = '{original}-{alias}.{extension}';
     
     /**
      * @var array upload routes
