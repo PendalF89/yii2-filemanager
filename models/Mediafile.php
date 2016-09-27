@@ -497,13 +497,13 @@ class Mediafile extends ActiveRecord
         $basePath = Yii::getAlias($routes['basePath']);
 
         foreach ($this->getThumbs() as $thumbUrl) {
-            if(file_exists("$basePath/$thumbUrl")) {
+            if(is_file("$basePath/$thumbUrl")) {
             	unlink("$basePath/$thumbUrl");
             }
         }
         
         $defaultThumbPath = "$basePath/{$this->getDefaultThumbUrl()}";
-        if(file_exists($defaultThumbPath)) {
+        if(is_file($defaultThumbPath)) {
             unlink($defaultThumbPath);
         }
     }
@@ -517,7 +517,7 @@ class Mediafile extends ActiveRecord
     {
         $basePath = Yii::getAlias($routes['basePath']);
         $filePath = "$basePath/{$this->url}";
-        return file_exists($filePath) ? unlink($filePath) : false;
+        return is_file($filePath) ? unlink($filePath) : false;
     }
 
     /**
