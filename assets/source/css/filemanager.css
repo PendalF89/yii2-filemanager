@@ -103,6 +103,7 @@
 #fileinfo .filename {
   clear: both;
   margin-bottom: 5px;
+  word-wrap: break-word;
 }
 #fileinfo #control-form .form-group {
   margin-bottom: 0;
