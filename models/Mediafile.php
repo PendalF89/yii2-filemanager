@@ -369,6 +369,9 @@ class Mediafile extends ActiveRecord
      */
     public function getDefaultThumbUrl($baseUrl = '')
     {
+        $module = Yii::$app->modules['filemanager'];
+        $baseDomain = Yii::getAlias($module->routes['baseUrl']);
+
         if ($this->isImage()) {
             $size = Module::getDefaultThumbSize();
             $originalFile = pathinfo($this->url);
@@ -378,9 +381,10 @@ class Mediafile extends ActiveRecord
             $width = $size[0];
             $height = $size[1];
 
-            return "$dirname/" . $this->getThumbFilename($filename, $extension, Module::DEFAULT_THUMB_ALIAS, $width, $height);
+            $thumbFileName = $this->getThumbFilename($filename, $extension, Module::DEFAULT_THUMB_ALIAS, $width, $height);
+            return sprintf("%s%s/%s", $baseDomain, $dirname,$thumbFileName);
         }
-        return "$baseUrl/images/file.png";
+        return sprintf("%s%s/images/file.png", $baseDomain, $baseUrl);
     }
 
     /**
