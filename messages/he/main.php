@@ -29,4 +29,5 @@ return [
     'Changes not saved.' => 'השינויים לא נשמרו!',
     'Changes saved!' => 'השינויים נשמרו בהצלחה',
     'Select image size' => 'בחר גודל תמונה',
+    'Search' => 'חפש',
 ];
