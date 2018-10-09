@@ -34,6 +34,7 @@ class Module extends \yii\base\Module
      * @var array upload routes
      */
     public $routes = [
+        'staticDomain' => '',
         // base absolute path to web directory
         'baseUrl' => '',
         // base web directory url

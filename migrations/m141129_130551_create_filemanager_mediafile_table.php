@@ -7,7 +7,7 @@ class m141129_130551_create_filemanager_mediafile_table extends Migration
 {
     public function up()
     {
-        $this->createTable('filemanager_mediafile', [
+        $this->createTable('{{%filemanager_mediafile}}', [
             'id' => 'pk',
             'filename' => Schema::TYPE_STRING . ' NOT NULL',
             'type' => Schema::TYPE_STRING . ' NOT NULL',
@@ -23,6 +23,6 @@ class m141129_130551_create_filemanager_mediafile_table extends Migration
 
     public function down()
     {
-        $this->dropTable('filemanager_mediafile');
+        $this->dropTable('{{%filemanager_mediafile}}');
     }
 }

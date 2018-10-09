@@ -71,13 +71,12 @@ class Tag extends ActiveRecord
 	 */
 	public static function removeUnusedTags()
 	{
-		return Yii::$app->db->createCommand(
-			'DELETE filemanager_tag
-			FROM
-				filemanager_tag
-			LEFT JOIN filemanager_mediafile_tag ON id = tag_id
-			WHERE
-				ISNULL(mediafile_id)'
-		)->execute();
+	    return Yii::$app->db->createCommand('
+	        DELETE FROM filemanager_tag
+	        WHERE NOT EXISTS (
+	          SELECT tag_id FROM filemanager_mediafile_tag
+	          WHERE mediafile_id IS NULL
+	        )
+	    ')->execute();
 	}
 }
