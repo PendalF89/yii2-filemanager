@@ -21,7 +21,7 @@ class Owners extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'filemanager_owners';
+        return '{{%filemanager_owners}}';
     }
 
     /**

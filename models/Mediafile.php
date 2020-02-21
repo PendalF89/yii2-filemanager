@@ -94,7 +94,7 @@ class Mediafile extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'filemanager_mediafile';
+        return '{{%filemanager_mediafile}}';
     }
 
     /**
