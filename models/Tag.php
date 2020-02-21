@@ -30,7 +30,7 @@ class Tag extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'filemanager_tag';
+        return '{{%filemanager_tag}}';
     }
 
     /**

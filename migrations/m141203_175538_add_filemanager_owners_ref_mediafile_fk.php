@@ -9,9 +9,9 @@ class m141203_175538_add_filemanager_owners_ref_mediafile_fk extends Migration
     {
         $this->addForeignKey(
             'filemanager_owners_ref_mediafile',
-            'filemanager_owners',
+            '{{%filemanager_owners}}',
             'mediafile_id',
-            'filemanager_mediafile',
+            '{{%filemanager_mediafile}}',
             'id',
             'RESTRICT',
             'RESTRICT'
@@ -20,6 +20,6 @@ class m141203_175538_add_filemanager_owners_ref_mediafile_fk extends Migration
 
     public function down()
     {
-        $this->dropForeignKey('filemanager_owners_ref_mediafile', 'filemanager_owners');
+        $this->dropForeignKey('filemanager_owners_ref_mediafile', '{{%filemanager_owners}}');
     }
 }
